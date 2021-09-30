@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Evian.Entities
+namespace Evian.Entities.DTO
 {
     public class FluxoCaixaProjecao
     {
@@ -12,12 +12,12 @@ namespace Evian.Entities
         public string Label { get; set; }
 
         [JsonProperty("totalRecebimentos")]
-        public double TotalRecebimentos { get; set; }
+        public decimal TotalRecebimentos { get; set; }
 
         [JsonProperty("totalPagamentos")]
-        public double TotalPagamentos { get; set; }
+        public decimal TotalPagamentos { get; set; }
 
         [JsonProperty("saldoFinal")]
-        public double SaldoFinal { get; set; }
+        public decimal SaldoFinal { get; set; }
     }
 }

@@ -9,8 +9,6 @@ namespace Evian.Entities
     {
         public string Nome { get; set; }
         public string CodigoIbge { get; set; }
-        public string CodigoBacen { get; set; }
-        public string CodigoSiscomex { get; set; }
         public string Sigla { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Fly01.Core.Entities.Domains.Commons
+namespace Evian.Entities.DTO
 {
     public class ExtratoContaSaldo
     {
@@ -12,6 +12,6 @@ namespace Fly01.Core.Entities.Domains.Commons
         public string ContaBancariaDescricao { get; set; }
 
         [JsonProperty("saldoConsolidado")]
-        public double SaldoConsolidado { get; set; }
+        public decimal SaldoConsolidado { get; set; }
     }
 }

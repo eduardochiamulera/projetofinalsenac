@@ -45,6 +45,8 @@ namespace Evian.Repository.Maps.Platform
             builder.Property(x => x.Repetir).HasColumnName("repetir").IsRequired();
             builder.Property(x => x.Numero).HasColumnName("numero").IsRequired().ValueGeneratedOnAddOrUpdate();
 
+            builder.HasOne(x => x.MovimentacaoFinanceira).WithOne(x => x.ContaPagar).HasForeignKey<MovimentacaoFinanceira>(x => x.ContaPagarId);
+
         }
     }
 }

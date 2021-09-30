@@ -11,13 +11,13 @@ namespace Evian.Entities
 
         public Guid ContaBancariaId { get; set; }
 
-        public double SaldoDia { get; set; }
+        public decimal SaldoDia { get; set; }
 
-        public double SaldoConsolidado { get; set; }
+        public decimal SaldoConsolidado { get; set; }
 
-        public double TotalRecebimentos { get; set; }
+        public decimal TotalRecebimentos { get; set; }
 
-        public double TotalPagamentos { get; set; }
+        public decimal TotalPagamentos { get; set; }
 
         public virtual ContaBancaria ContaBancaria { get; set; }
     }

@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fly01.Core.Entities.Domains.Commons
+namespace Evian.Entities.DTO
 {
     public class CondicaoParcelamentoSimulacao
     {

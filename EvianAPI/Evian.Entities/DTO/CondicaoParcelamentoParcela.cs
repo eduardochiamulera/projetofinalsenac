@@ -10,6 +10,6 @@ namespace Evian.Entities.DTO
         [Column(TypeName = "Date")]
         public DateTime DataVencimento { get; set; }
 
-        public double Valor { get; set; }
+        public decimal Valor { get; set; }
     }
 }

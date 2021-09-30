@@ -23,6 +23,7 @@ namespace Evian.Repository.Maps.Platform
             builder.Property(x => x.BancoId).HasColumnName("banco_id").HasMaxLength(36);
             builder.HasOne(x => x.Banco).WithMany().HasForeignKey(x => x.BancoId);
 
+            builder.HasOne(x => x.SaldoHistorico).WithOne(x => x.ContaBancaria).HasForeignKey<SaldoHistorico>(x => x.ContaBancariaId);
         }
     }
 }

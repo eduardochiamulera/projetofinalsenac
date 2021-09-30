@@ -2,19 +2,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace Fly01.Core.Entities.Domains.Commons
+namespace Evian.Entities.DTO
 {
     public class AggregatorSaldos
     {
-        public double SumSaldoConsolidado { get; set; }
+        public decimal SumSaldoConsolidado { get; set; }
 
-        public List<double> SaldoConsolidado { get; set; }
+        public List<decimal> SaldoConsolidado { get; set; }
 
         public AggregatorSaldos()
         {
-            SaldoConsolidado = new List<double>();
+            SaldoConsolidado = new List<decimal>();
 
-            SumSaldoConsolidado = default(double);
+            SumSaldoConsolidado = default(decimal);
         }
     }
 
@@ -41,16 +41,16 @@ namespace Fly01.Core.Entities.Domains.Commons
         public DateTime Data { get; set; }
 
         [JsonProperty("totalPagamentos")]
-        public double TotalPagamentos { get; set; }
+        public decimal TotalPagamentos { get; set; }
 
         [JsonProperty("totalRecebimentos")]
-        public double TotalRecebimentos { get; set; }
+        public decimal TotalRecebimentos { get; set; }
 
         [JsonProperty("saldoDia")]
-        public double SaldoDia { get; set; }
+        public decimal SaldoDia { get; set; }
 
         [JsonProperty("saldoConsolidado")]
-        public double SaldoConsolidado { get; set; }
+        public decimal SaldoConsolidado { get; set; }
 
     }
 }

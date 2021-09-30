@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Fly01.Core.Entities.Domains.Commons
+namespace Evian.Entities.DTO
 {
     public class ExtratoDetalhe
     {
@@ -27,6 +27,6 @@ namespace Fly01.Core.Entities.Domains.Commons
         public string PessoaNome { get; set; }
 
         [JsonProperty("valorLancamento")]
-        public double ValorLancamento { get; set; }
+        public decimal ValorLancamento { get; set; }
     }
 }

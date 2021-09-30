@@ -18,9 +18,12 @@ namespace Evian.Entities
         public string DigitoConta { get; set; }
 
         public Guid BancoId { get; set; }
+        public decimal? ValorInicial { get; set; }
 
         public virtual Banco Banco { get; set; }
 
-        public decimal? ValorInicial { get; set; }
+        public virtual SaldoHistorico SaldoHistorico { get; set; }
+
+
     }
 }

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -15,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Evian.Entities\Evian.Entities.csproj" />
     <ProjectReference Include="..\Evian.Repository\Evian.Repository.csproj" />
+    <ProjectReference Include="..\EvianBL\EvianBL.csproj" />
   </ItemGroup>
 
 </Project>

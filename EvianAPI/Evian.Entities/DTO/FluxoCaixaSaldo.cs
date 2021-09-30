@@ -1,19 +1,19 @@
 ﻿using Newtonsoft.Json;
 
-namespace Evian.Entities
+namespace Evian.Entities.DTO
 {
     public class FluxoCaixaSaldo
     {
         [JsonProperty("saldoAtual")]
-        public double SaldoAtual { get; set; }
+        public decimal SaldoAtual { get; set; }
 
         [JsonProperty("totalRecebimentos")]
-        public double TotalRecebimentos { get; set; }
+        public decimal TotalRecebimentos { get; set; }
 
         [JsonProperty("totalPagamentos")]
-        public double TotalPagamentos { get; set; }
+        public decimal TotalPagamentos { get; set; }
 
         [JsonProperty("saldoProjetado")]
-        public double SaldoProjetado { get; set; }
+        public decimal SaldoProjetado { get; set; }
     }
 }

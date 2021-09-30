@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Scripts\insertPais - Copy.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -22,6 +27,21 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Evian.Entities\Evian.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Scripts\insertEstados.sql">
+      <LastGenOutput>insertEstados.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Scripts\insertPais.sql">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>insertPais.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>

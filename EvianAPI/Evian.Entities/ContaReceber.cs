@@ -53,5 +53,6 @@ namespace Evian.Entities
         public virtual Pessoa Pessoa { get; set; }
         public virtual FormaPagamento FormaPagamento { get; set; }
         public virtual ContaReceber ContaReceberParcelaPai { get; set; }
+        public virtual MovimentacaoFinanceira MovimentacaoFinanceira { get; set; }
     }
 }

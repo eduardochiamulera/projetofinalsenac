@@ -5,12 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Evian.Entities
 {
-    [Table("Movimentacao")]
     public class MovimentacaoFinanceira : EmpresaBase
     {
         public DateTime Data { get; set; }
 
-        public double Valor { get; set; }
+        public decimal Valor { get; set; }
 
         public Guid? ContaBancariaOrigemId { get; set; }
 

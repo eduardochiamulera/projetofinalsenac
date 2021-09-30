@@ -54,6 +54,6 @@ namespace Evian.Entities
         public virtual FormaPagamento FormaPagamento { get; set; }
         public virtual ContaPagar ContaPagarParcelaPai { get; set; }
         public virtual ContaPagar ContaPagarRepeticaoPai { get; set; }
-
+        public virtual MovimentacaoFinanceira MovimentacaoFinanceira { get; set; }
     }
 }

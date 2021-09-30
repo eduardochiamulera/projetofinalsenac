@@ -1,7 +1,9 @@
 ﻿using Evian.Entities.Base;
 using Evian.Repository.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -25,6 +27,15 @@ namespace Evian.Repository.Core
             {
                 return dbSet;
             }
+        }
+
+        public List<EntityEntry> GetAffectEntries()
+        {
+            List<EntityEntry> entries = new List<EntityEntry>();
+            foreach (var entry in context.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Modified))
+                entries.Add(entry);
+
+            return entries;
         }
 
         public IQueryable<TEntity> AllWithInactiveIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
@@ -70,18 +81,48 @@ namespace Evian.Repository.Core
             return dbSet.FindAsync(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual TEntity Insert(TEntity entity)
         {
             dbSet.Add(entity);
+            context.SaveChanges();
+            return entity;
+        }
+
+        public virtual TEntity Update(TEntity entity)
+        {
+            var result = dbSet.SingleOrDefault(p => p.Id.Equals(entity.Id));
+            if (result != null)
+            {
+                try
+                {
+                    context.Entry(result).CurrentValues.SetValues(entity);
+                    context.SaveChanges();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public virtual void Delete(TEntity entityToDelete)
         {
         }
 
-        public virtual void Delete(object id)
+        public virtual void Delete(Guid id)
         {
-            Delete(Find(id));
+            var result = dbSet.SingleOrDefault(p => p.Id.Equals(id));
+            if (result != null)
+            {
+                result.Ativo = false;
+                result.DataExclusao = DateTime.Now;
+                result.UsuarioExclusao = "";
+            }
         }
 
         public virtual void AttachForUpdate(TEntity entityToUpdate)

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evian.Helpers", "Evian.Help
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evian.Repository", "Evian.Repository\Evian.Repository.csproj", "{371DEF14-0520-4672-8F8F-9053DBEA34D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvianBL", "EvianBL\EvianBL.csproj", "{F8E2F743-C8CA-478F-B37E-C7048C80161D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{371DEF14-0520-4672-8F8F-9053DBEA34D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{371DEF14-0520-4672-8F8F-9053DBEA34D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{371DEF14-0520-4672-8F8F-9053DBEA34D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8E2F743-C8CA-478F-B37E-C7048C80161D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E2F743-C8CA-478F-B37E-C7048C80161D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E2F743-C8CA-478F-B37E-C7048C80161D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E2F743-C8CA-478F-B37E-C7048C80161D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
