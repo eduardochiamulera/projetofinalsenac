@@ -14,8 +14,8 @@ namespace Evian.Repository.Maps.Domain
             base.Configure(builder);
 
             builder.Property(x => x.Nome).HasColumnName("nome").HasMaxLength(200).IsRequired();
-            builder.Property(x => x.Sigla).HasColumnName("sigla").HasMaxLength(2).IsRequired();
-            builder.Property(x => x.CodigoIbge).HasColumnName("codigo_ibge").HasMaxLength(6).IsRequired();
+            builder.Property(x => x.Sigla).HasColumnName("sigla").HasMaxLength(3).IsRequired();
+            builder.Property(x => x.CodigoIbge).HasColumnName("codigo_ibge").HasMaxLength(8).IsRequired();
         }
     }
 }

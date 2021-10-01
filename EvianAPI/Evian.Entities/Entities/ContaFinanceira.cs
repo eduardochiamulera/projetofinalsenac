@@ -1,13 +1,16 @@
 ﻿using Evian.Entities.Entities.Base;
 using Evian.Entities.Enums;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Evian.Entities.Entities
 {
     public class ContaFinanceira : EmpresaBase
     {
+        [ForeignKey("ContaFinanceiraRepeticaoPai")]
         public Guid? ContaFinanceiraRepeticaoPaiId { get; set; }
 
+        [ForeignKey("ContaFinanceiraParcelaPai")]
         public Guid? ContaFinanceiraParcelaPaiId { get; set; }
 
         public decimal ValorPrevisto { get; set; }
@@ -47,6 +50,8 @@ namespace Evian.Entities.Entities
         public int Numero { get; set; }
 
         public virtual ContaFinanceira ContaFinanceiraRepeticaoPai { get; set; }
+        //public virtual ContaFinanceira ContaFinanceiraRepeticao { get; set; }
+        //public virtual ContaFinanceira ContaFinanceiraParcela { get; set; }
         public virtual Categoria Categoria { get; set; }
         public virtual CondicaoParcelamento CondicaoParcelamento { get; set; }
         public virtual Pessoa Pessoa { get; set; }

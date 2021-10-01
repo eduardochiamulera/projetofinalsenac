@@ -8,13 +8,15 @@ namespace Evian.Repository.Maps.Platform
 {
     public class ContaFinanceiraMap : EmpresaBaseMap<ContaFinanceira> 
     {
-        public ContaFinanceiraMap() : base("conta_pagar") {}
+        public ContaFinanceiraMap() : base("conta_financeira") {}
         public override void Configure(EntityTypeBuilder<ContaFinanceira> builder)
         {
             base.Configure(builder);
 
             builder.Property(x => x.ContaFinanceiraRepeticaoPaiId).HasColumnName("conta_pagar_pai_id").HasMaxLength(36);
-            
+            //builder.HasOne(x => x.ContaFinanceiraParcelaPai).WithOne(x => x.ContaFinanceiraParcela).HasForeignKey<ContaFinanceira>(x => x.conta)
+
+
             builder.Property(x => x.ContaFinanceiraParcelaPaiId).HasColumnName("conta_pagar_parcela_pai_id").HasMaxLength(36);
 
             builder.Property(x => x.ValorPrevisto).HasColumnName("valor_previsto").IsRequired();
