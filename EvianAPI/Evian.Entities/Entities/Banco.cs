@@ -1,7 +1,7 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using Newtonsoft.Json;
 
-namespace Evian.Entities
+namespace Evian.Entities.Entities
 {
     public class Banco : DomainBase
     {

@@ -1,9 +1,7 @@
-﻿using Evian.Entities.Base;
-using Newtonsoft.Json;
+﻿using Evian.Entities.Entities.Base;
 using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace Evian.Entities
+namespace Evian.Entities.Entities
 {
     public class ContaBancaria : EmpresaBase
     {

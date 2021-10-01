@@ -1,8 +1,8 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Evian.Entities
+namespace Evian.Entities.Entities
 {
     public class TransferenciaFinanceira : EmpresaBase
     {

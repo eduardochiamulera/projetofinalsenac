@@ -1,9 +1,6 @@
-﻿using Evian.Entities.Base;
-using Newtonsoft.Json;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using Evian.Entities.Entities.Base;
 
-namespace Evian.Entities
+namespace Evian.Entities.Entities
 {
     public class Pais : DomainBase
     {

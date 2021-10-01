@@ -1,8 +1,8 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace Evian.Entities
+namespace Evian.Entities.Entities
 {
     public class CondicaoParcelamento : EmpresaBase
     {

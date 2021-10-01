@@ -1,9 +1,9 @@
-﻿using Evian.Entities.Base;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities.Base;
+using Evian.Entities.Entities.Enums;
 using System;
 using System.Collections.Generic;
 
-namespace Evian.Entities
+namespace Evian.Entities.Entities
 {
     public class ConciliacaoBancariaItem : EmpresaBase
     {

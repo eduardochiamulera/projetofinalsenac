@@ -1,9 +1,7 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Evian.Entities
+namespace Evian.Entities.Entities
 {
     public class MovimentacaoFinanceira : EmpresaBase
     {
@@ -15,9 +13,7 @@ namespace Evian.Entities
 
         public Guid? ContaBancariaDestinoId { get; set; }
 
-        public Guid? ContaReceberId { get; set; }
-
-        public Guid? ContaPagarId { get; set; }
+        public Guid? ContaFinanceiraId { get; set; }
 
         public Guid? CategoriaId { get; set; }
 
@@ -27,8 +23,6 @@ namespace Evian.Entities
 
         public virtual ContaBancaria ContaBancariaDestino { get; set; }
 
-        public virtual ContaReceber ContaReceber { get; set; }
-
-        public virtual ContaPagar ContaPagar { get; set; }
+        public virtual ContaFinanceira ContaFinanceira { get; set; }
     }
 }

@@ -1,16 +1,14 @@
-﻿using Evian.Entities.Base;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities.Base;
+using Evian.Entities.Entities.Enums;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Evian.Entities
+namespace Evian.Entities.Entities
 {
-    public class ContaPagar : EmpresaBase
+    public class ContaFinanceira : EmpresaBase
     {
-        public Guid? ContaPagarRepeticaoPaiId { get; set; }
+        public Guid? ContaFinanceiraRepeticaoPaiId { get; set; }
 
-        public Guid? ContaPagarParcelaPaiId { get; set; }
+        public Guid? ContaFinanceiraParcelaPaiId { get; set; }
 
         public decimal ValorPrevisto { get; set; }
 
@@ -48,12 +46,12 @@ namespace Evian.Entities
 
         public int Numero { get; set; }
 
+        public virtual ContaFinanceira ContaFinanceiraRepeticaoPai { get; set; }
         public virtual Categoria Categoria { get; set; }
         public virtual CondicaoParcelamento CondicaoParcelamento { get; set; }
         public virtual Pessoa Pessoa { get; set; }
         public virtual FormaPagamento FormaPagamento { get; set; }
-        public virtual ContaPagar ContaPagarParcelaPai { get; set; }
-        public virtual ContaPagar ContaPagarRepeticaoPai { get; set; }
+        public virtual ContaFinanceira ContaFinanceiraParcelaPai { get; set; }
         public virtual MovimentacaoFinanceira MovimentacaoFinanceira { get; set; }
     }
 }
