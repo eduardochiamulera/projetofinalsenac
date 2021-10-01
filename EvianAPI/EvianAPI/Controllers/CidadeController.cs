@@ -1,4 +1,4 @@
-﻿using Evian.Entities;
+﻿using Evian.Entities.Entities;
 using EvianBL;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;

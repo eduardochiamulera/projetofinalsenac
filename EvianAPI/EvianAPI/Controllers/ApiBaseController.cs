@@ -1,4 +1,4 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using Evian.Repository.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
@@ -12,6 +12,7 @@ namespace EvianAPI.Controllers
     public abstract class ApiBaseController<TEntity> : ControllerBase where TEntity : DomainBase, new()
     {
         protected abstract TEntity Find(object id);
+        protected abstract bool Exists(object primaryKey); 
 
         protected abstract IQueryable<TEntity> All();
 

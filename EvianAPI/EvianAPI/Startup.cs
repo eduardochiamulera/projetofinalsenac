@@ -1,3 +1,5 @@
+using AutoMapper;
+using Evian.Entities.Entities.Adapters;
 using Evian.Repository.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,15 +33,19 @@ namespace EvianAPI
 
             services.AddOptions();
 
-            services.AddControllers().AddJsonOptions(options =>
+            services.AddControllers().AddNewtonsoftJson().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.IgnoreNullValues = true;
+            });
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new PessoaProfile());
             });
 
-            services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.IgnoreNullValues = true;
-            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            //services.AddAutoMapper(typeof(Startup));
 
             services.AddCors();
             services.AddSwaggerGen(c =>

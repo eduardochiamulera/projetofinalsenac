@@ -1,4 +1,4 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using EvianBL;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +15,11 @@ namespace EvianAPI.Controllers
         {
             get { return _unitOfWork ?? (_unitOfWork = new UnitOfWork(ContextInitialize)); }
             set { _unitOfWork = value; }
+        }
+
+        protected override bool Exists(object primaryKey)
+        {
+            return UnitOfWork.GetGenericBL<TBL>().Exists(primaryKey);
         }
 
         protected override IQueryable<TEntity> All()
