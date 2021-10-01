@@ -1,8 +1,7 @@
-﻿using Evian.Entities;
-using Evian.Entities.DTO;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities;
+using Evian.Entities.Entities.DTO;
+using Evian.Entities.Entities.Enums;
 using Evian.Repository.Core;
-using EvianBL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,20 +14,20 @@ namespace EvianBL
 
         public SaldoHistoricoBL(ApplicationDbContext context, UnitOfWork unitOfWork) : base(context, unitOfWork) { }
 
-        public List<ExtratoContaSaldo> GetSaldos()
+        public List<ExtratoContaSaldoDTO> GetSaldos()
         {
             var saldos = (from si in AllIncluding(x => x.ContaBancaria)
                           where si.Ativo && si.ContaBancaria.Ativo
                           group si by si.ContaBancariaId into g
                           let dataRecord = g.OrderByDescending(t => t.Data).FirstOrDefault()
-                          select new ExtratoContaSaldo()
+                          select new ExtratoContaSaldoDTO()
                           {
                               ContaBancariaDescricao = dataRecord.ContaBancaria.NomeConta,
                               ContaBancariaId = dataRecord.ContaBancariaId,
                               SaldoConsolidado = Math.Round(dataRecord.SaldoConsolidado, 2)
                           }).ToList();
 
-            saldos.Insert(0, new ExtratoContaSaldo()
+            saldos.Insert(0, new ExtratoContaSaldoDTO()
             {
                 ContaBancariaId = Guid.Empty,
                 ContaBancariaDescricao = labelTodasAsContas,

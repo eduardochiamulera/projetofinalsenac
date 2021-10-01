@@ -1,4 +1,4 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using Evian.Repository.Core;
 using Evian.Repository.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
@@ -65,5 +65,7 @@ namespace EvianBL
             return _repository.GetAffectEntries().Where(x => x.State == EntityState.Added && x.Entity.GetType().Name == typeof(TEntity).Name)
                                             .Select(x => x.Entity as TEntity);
         }
+
+        public virtual bool Exists(object primaryKey) => _repository.Exists(primaryKey);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Evian.Entities;
+﻿using Evian.Entities.Entities;
 using Evian.Notifications;
 using Evian.Repository.Core;
 using System.Linq;

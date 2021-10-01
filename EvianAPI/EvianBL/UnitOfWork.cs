@@ -99,11 +99,8 @@ namespace EvianBL
         private BancoBL bancoBL;
         public BancoBL BancoBL => bancoBL ?? (bancoBL = new BancoBL(_context));
 
-        private ContaPagarBL contaPagarBL;
-        public ContaPagarBL ContaPagarBL => contaPagarBL ?? (contaPagarBL = new ContaPagarBL(_context, this));
-
-        private ContaReceberBL contaReceberBL;
-        public ContaReceberBL ContaReceberBL => contaReceberBL ?? (contaReceberBL = new ContaReceberBL(_context, this));
+        private ContaFinanceiraBL contaFinanceiraBL;
+        public ContaFinanceiraBL ContaFinanceiraBL => contaFinanceiraBL ?? (contaFinanceiraBL = new ContaFinanceiraBL(_context, this));
 
         private EstadoBL estadoBL;
         public EstadoBL EstadoBL => estadoBL ?? (estadoBL = new EstadoBL(_context));
@@ -113,9 +110,6 @@ namespace EvianBL
 
         private CondicaoParcelamentoBL condicaoParcelamentoBL;
         public CondicaoParcelamentoBL CondicaoParcelamentoBL => condicaoParcelamentoBL ?? (condicaoParcelamentoBL = new CondicaoParcelamentoBL(_context, this));
-
-        private ContaFinanceiraBL contaFinanceiraBL;
-        public ContaFinanceiraBL ContaFinanceiraBL => contaFinanceiraBL ?? (contaFinanceiraBL = new ContaFinanceiraBL(_context, this));
 
         private SaldoHistoricoBL saldoHistoricoBL;
         public SaldoHistoricoBL SaldoHistoricoBL => saldoHistoricoBL ?? (saldoHistoricoBL = new SaldoHistoricoBL(_context, this));

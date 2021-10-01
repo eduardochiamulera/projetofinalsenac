@@ -1,5 +1,5 @@
-﻿using Evian.Entities;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities;
+using Evian.Entities.Entities.Enums;
 using Evian.Notifications;
 using Evian.Repository.Core;
 using Microsoft.EntityFrameworkCore;
@@ -50,7 +50,7 @@ namespace EvianBL
             {
                 Data = entity.Data,
                 ContaBancariaId = entity.ContaBancariaId,
-                ContaPagarId = x.Id,
+                ContaFinanceiraId = x.Id,
                 Observacao = x.Descricao + " " + entity.Observacao ?? "",
                 Valor = x.Saldo
             }).ToList();

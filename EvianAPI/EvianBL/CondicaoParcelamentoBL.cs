@@ -1,5 +1,5 @@
-﻿using Evian.Entities;
-using Evian.Entities.DTO;
+﻿using Evian.Entities.Entities;
+using Evian.Entities.Entities.DTO;
 using Evian.Notifications;
 using Evian.Repository.Core;
 using System;
@@ -43,11 +43,11 @@ namespace EvianBL
             return true;
         }
 
-        private List<CondicaoParcelamentoParcela> GetPrestacaoUnica(DateTime dataBase, decimal valor, int daysAdd)
+        private List<CondicaoParcelamentoParcelaDTO> GetPrestacaoUnica(DateTime dataBase, decimal valor, int daysAdd)
         {
-            return new List<CondicaoParcelamentoParcela>()
+            return new List<CondicaoParcelamentoParcelaDTO>()
             {
-                new CondicaoParcelamentoParcela()
+                new CondicaoParcelamentoParcelaDTO()
                 {
                     DescricaoParcela = "01/01",
                     Valor = valor,
@@ -56,9 +56,9 @@ namespace EvianBL
             };
         }
 
-        private List<CondicaoParcelamentoParcela> GetPrestacoesMultiplasPorMes(DateTime dataBase, int qtdParcelas, decimal valor)
+        private List<CondicaoParcelamentoParcelaDTO> GetPrestacoesMultiplasPorMes(DateTime dataBase, int qtdParcelas, decimal valor)
         {
-            var result = new List<CondicaoParcelamentoParcela>();
+            var result = new List<CondicaoParcelamentoParcelaDTO>();
 
             var basePow = (decimal)Math.Pow(10, 2);
             var valorParcela = Math.Truncate(valor / qtdParcelas * basePow) / basePow;
@@ -66,7 +66,7 @@ namespace EvianBL
 
             for (int iParcela = 1; iParcela <= qtdParcelas; iParcela++)
             {
-                result.Add(new CondicaoParcelamentoParcela()
+                result.Add(new CondicaoParcelamentoParcelaDTO()
                 {
                     DescricaoParcela = string.Format("{0}/{1}", iParcela.ToString("D2"), qtdParcelas.ToString("D2")),
                     DataVencimento = iParcela > 1
@@ -81,9 +81,9 @@ namespace EvianBL
             return result;
         }
 
-        private List<CondicaoParcelamentoParcela> GetPrestacoesMultiplasPorDia(DateTime dataBase, List<int> daysToAdd, decimal valor)
+        private List<CondicaoParcelamentoParcelaDTO> GetPrestacoesMultiplasPorDia(DateTime dataBase, List<int> daysToAdd, decimal valor)
         {
-            var result = new List<CondicaoParcelamentoParcela>();
+            var result = new List<CondicaoParcelamentoParcelaDTO>();
 
             var qtdParcelas = daysToAdd.Count();
             var basePow = (decimal)Math.Pow(10, 2);
@@ -92,7 +92,7 @@ namespace EvianBL
 
             for (int iParcela = 1; iParcela <= qtdParcelas; iParcela++)
             {
-                result.Add(new CondicaoParcelamentoParcela()
+                result.Add(new CondicaoParcelamentoParcelaDTO()
                 {
                     DescricaoParcela = string.Format("{0}/{1}", iParcela.ToString("D2"), qtdParcelas.ToString("D2")),
                     DataVencimento = dataBase.AddDays(daysToAdd[iParcela - 1]),
@@ -105,7 +105,7 @@ namespace EvianBL
             return result;
         }
 
-        public List<CondicaoParcelamentoParcela> GetPrestacoes(CondicaoParcelamento condicaoParcelamento, DateTime dataVencimentoBase, decimal valorTotal)
+        public List<CondicaoParcelamentoParcelaDTO> GetPrestacoes(CondicaoParcelamento condicaoParcelamento, DateTime dataVencimentoBase, decimal valorTotal)
         {
             if (condicaoParcelamento == null)
                 throw new Exception("Condição de Parcelamento inválida.");
@@ -127,7 +127,7 @@ namespace EvianBL
             return GetPrestacoesMultiplasPorDia(dataVencimentoBase, condicoesParcelamento, valorTotal);
         }
 
-        public List<CondicaoParcelamentoParcela> GetPrestacoes(Guid condicaoPagamentoId, DateTime dataVencimentoBase, decimal valorTotal)
+        public List<CondicaoParcelamentoParcelaDTO> GetPrestacoes(Guid condicaoPagamentoId, DateTime dataVencimentoBase, decimal valorTotal)
         {
             var condicaoParcelamento = Find(condicaoPagamentoId);
             return GetPrestacoes(condicaoParcelamento, dataVencimentoBase, valorTotal);

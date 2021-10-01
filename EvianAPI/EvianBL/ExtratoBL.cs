@@ -1,4 +1,4 @@
-﻿using Evian.Entities.DTO;
+﻿using Evian.Entities.Entities.DTO;
 using Evian.Repository.Core;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EvianBL
 {
-    public class ExtratoBL : GenericDomainBaseBL<Extrato>
+    public class ExtratoBL : GenericDomainBaseBL<ExtratoDTO>
     {
         private readonly UnitOfWork _unitOfWork;
         private const string labelTodasAsContas = "Todas as Contas";
@@ -14,14 +14,14 @@ namespace EvianBL
         public ExtratoBL(ApplicationDbContext context, UnitOfWork unitOfWork) : base(context) { }
 
         #region #1 Saldos Consolidados por Conta
-        public List<ExtratoContaSaldo> GetSaldos()
+        public List<ExtratoContaSaldoDTO> GetSaldos()
         {
             return _unitOfWork.SaldoHistoricoBL.GetSaldos();
         }
         #endregion
 
         #region #2 Historico Saldos
-        public ExtratoHistoricoSaldo GetHistoricoSaldos(DateTime dataInicial, DateTime dataFinal, Guid? contaBancariaId)
+        public ExtratoHistoricoSaldoDTO GetHistoricoSaldos(DateTime dataInicial, DateTime dataFinal, Guid? contaBancariaId)
         {
             var dataSaldoInicial = dataInicial.AddDays(-1);
             var saldosIniciais = (from si in _unitOfWork.SaldoHistoricoBL.All
@@ -53,7 +53,7 @@ namespace EvianBL
                                      SaldoDia = sp.SaldoDia
                                  }).ToList();
 
-            var listOfBalances = saldosIniciais.Union(saldosPeriodo).Select(itemSaldo => new ExtratoSaldoHistoricoItem()
+            var listOfBalances = saldosIniciais.Union(saldosPeriodo).Select(itemSaldo => new ExtratoSaldoHistoricoItemDTO()
             {
                 Data = itemSaldo.Data,
                 SaldoConsolidado = Math.Round(itemSaldo.SaldoConsolidado, 2),
@@ -68,7 +68,7 @@ namespace EvianBL
 
                 if (lastRecord != null)
                 {
-                    listOfBalances.Add(new ExtratoSaldoHistoricoItem()
+                    listOfBalances.Add(new ExtratoSaldoHistoricoItemDTO()
                     {
                         Data = dataFinal,
                         SaldoConsolidado = lastRecord.SaldoConsolidado,
@@ -85,11 +85,11 @@ namespace EvianBL
             return GetHistoricoSaldosByAll(listOfBalances, saldoInicial, saldosIniciaisAny);
         }
 
-        private ExtratoHistoricoSaldo GetHistoricoSaldosByConta(List<ExtratoSaldoHistoricoItem> listOfBalances, Guid contaBancariaId)
+        private ExtratoHistoricoSaldoDTO GetHistoricoSaldosByConta(List<ExtratoSaldoHistoricoItemDTO> listOfBalances, Guid contaBancariaId)
         {
             var contaBancaria = _unitOfWork.ContaBancariaBL.All.Where(x => x.Id == contaBancariaId).Select(x => new { x.NomeConta }).FirstOrDefault();
 
-            return new ExtratoHistoricoSaldo()
+            return new ExtratoHistoricoSaldoDTO()
             {
                 ContaBancariaId = contaBancariaId,
                 ContaBancariaDescricao = contaBancaria != null
@@ -99,12 +99,12 @@ namespace EvianBL
             };
         }
 
-        private ExtratoHistoricoSaldo GetHistoricoSaldosByAll(List<ExtratoSaldoHistoricoItem> listOfBalances, decimal saldoInicial, bool saldosIniciaisAny = false)
+        private ExtratoHistoricoSaldoDTO GetHistoricoSaldosByAll(List<ExtratoSaldoHistoricoItemDTO> listOfBalances, decimal saldoInicial, bool saldosIniciaisAny = false)
         {
             // Agrupamento por Data
             listOfBalances = (from s in listOfBalances
                               group s by s.Data into g
-                              select new ExtratoSaldoHistoricoItem()
+                              select new ExtratoSaldoHistoricoItemDTO()
                               {
                                   Data = g.Key,
                                   SaldoConsolidado = listOfBalances.FirstOrDefault().SaldoConsolidado, //(cumulativo de todas as contas e calculado com base no saldo do dia)
@@ -120,7 +120,7 @@ namespace EvianBL
             // var aggregator =  { 1, 4, 16, 35, 68 }
 
             var cont = 0;
-            var aggregator = new AggregatorSaldos();
+            var aggregator = new AggregatorSaldosDTO();
             var aggregatorResult = listOfBalances.Aggregate(aggregator, (output, item) =>
             {
                 output.SumSaldoConsolidado += item.SaldoDia;
@@ -140,7 +140,7 @@ namespace EvianBL
             for (int i = 0; i <= listOfBalances.Count - 1; i++)
                 listOfBalances[i].SaldoConsolidado = Math.Round(aggregatorResult.SaldoConsolidado[i], 2);
 
-            return new ExtratoHistoricoSaldo()
+            return new ExtratoHistoricoSaldoDTO()
             {
                 ContaBancariaId = Guid.Empty,
                 ContaBancariaDescricao = labelTodasAsContas,
@@ -150,11 +150,11 @@ namespace EvianBL
         #endregion
 
         #region #3 Detalhes das Movimentações
-        public List<ExtratoDetalhe> GetExtratoDetalhe(DateTime dataInicial, DateTime dataFinal, Guid? contaBancariaId, int skipRecords, int takeRecords)
+        public List<ExtratoDetalheDTO> GetExtratoDetalheDTO(DateTime dataInicial, DateTime dataFinal, Guid? contaBancariaId, int skipRecords, int takeRecords)
         {
             var contasBancarias = _unitOfWork.ContaBancariaBL.All.Select(x => new { x.Id, x.NomeConta }).ToList();
 
-            var movimentacoes = (from mov in _unitOfWork.MovimentacaoBL.AllIncluding(x => x.ContaPagar, x => x.ContaReceber, x => x.ContaReceber.Pessoa, x => x.ContaPagar.Pessoa, x => x.ContaBancariaDestino, x => x.ContaBancariaOrigem)
+            var movimentacoes = (from mov in _unitOfWork.MovimentacaoBL.AllIncluding(x => x.ContaFinanceira, x => x.ContaFinanceira.Pessoa, x => x.ContaBancariaDestino, x => x.ContaBancariaOrigem)
                                  where (mov.Data >= dataInicial && mov.Data <= dataFinal) && mov.Ativo &&
                                  //((mov.ContaFinanceira != null && (mov.ContaFinanceira.Ativo && mov.ContaFinanceira.Pessoa.Ativo)) || (mov.ContaFinanceira == null)) &&
                                  (mov.ContaBancariaDestino.Ativo || mov.ContaBancariaOrigem.Ativo) &&
@@ -163,15 +163,15 @@ namespace EvianBL
                                      (mov.ContaBancariaDestinoId == contaBancariaId) || (mov.ContaBancariaOrigemId == contaBancariaId) :
                                      (mov.ContaBancariaDestino == null) || (mov.ContaBancariaOrigemId == null)
                                  )
-                                 select new ExtratoDetalhe()
+                                 select new ExtratoDetalheDTO()
                                  {
                                      ContaBancariaId = (Guid)(mov.ContaBancariaDestinoId ?? mov.ContaBancariaOrigemId),
                                      ContaBancariaDescricao = string.Empty,
                                      DataMovimento = mov.Data,
                                      DataInclusao = mov.DataInclusao,
-                                     DescricaoLancamento = mov.Descricao == null ? (mov.ContaPagar != null ? mov.ContaPagar.Descricao : "") : mov.Descricao,
-                                     ContaFinanceiraNumero = mov.ContaPagar != null ? mov.ContaPagar.Numero.ToString() : mov.ContaReceber != null ? mov.ContaReceber.Numero.ToString() : "",
-                                     PessoaNome = mov.ContaPagar != null ? mov.ContaPagar.Pessoa.Nome : mov.ContaReceber != null ? mov.ContaReceber.Pessoa.Nome : "",
+                                     DescricaoLancamento = mov.Descricao == null ? (mov.ContaFinanceira != null ? mov.ContaFinanceira.Descricao : "") : mov.Descricao,
+                                     ContaFinanceiraNumero = mov.ContaFinanceira != null ? mov.ContaFinanceira.Numero.ToString() :  "",
+                                     PessoaNome = mov.ContaFinanceira != null ? mov.ContaFinanceira.Pessoa.Nome : "",
                                      ValorLancamento = Math.Round(mov.Valor, 2),
                                  }).OrderByDescending(x => x.DataMovimento).ThenByDescending(x => x.DataInclusao).Skip(skipRecords).Take(takeRecords).ToList();
 
@@ -182,9 +182,9 @@ namespace EvianBL
             return movimentacoes;
         }
 
-        public int GetExtratoDetalheCount(DateTime dataInicial, DateTime dataFinal, Guid? contaBancariaId)
+        public int GetExtratoDetalheDTOCount(DateTime dataInicial, DateTime dataFinal, Guid? contaBancariaId)
         {
-            var countRecords = _unitOfWork.MovimentacaoBL.AllIncluding(x => x.ContaPagar, x => x.ContaReceber, x => x.ContaReceber.Pessoa, x => x.ContaPagar.Pessoa, x => x.ContaBancariaDestino, x => x.ContaBancariaOrigem)
+            var countRecords = _unitOfWork.MovimentacaoBL.AllIncluding(x => x.ContaFinanceira, x => x.ContaFinanceira.Pessoa, x => x.ContaBancariaDestino, x => x.ContaBancariaOrigem)
                 .Count(x => x.Data >= dataInicial && x.Data <= dataFinal && x.Ativo &&
                 //(x.ContaFinanceira != null && (x.ContaFinanceira.Ativo && x.ContaFinanceira.Pessoa.Ativo) || x.ContaFinanceira == null) &&
                 (x.ContaBancariaDestino.Ativo || x.ContaBancariaOrigem.Ativo) &&

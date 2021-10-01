@@ -1,5 +1,5 @@
-﻿using Evian.Entities.DTO;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities.DTO;
+using Evian.Entities.Entities.Enums;
 using Evian.Repository.Core;
 using EvianBL;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Linq;
 namespace EvianBL
 {
-    public class FluxoCaixaBL : GenericDomainBaseBL<FluxoCaixa>
+    public class FluxoCaixaBL : GenericDomainBaseBL<FluxoCaixaDTO>
     {
         private readonly UnitOfWork _unitOfWork;
 
@@ -19,7 +19,7 @@ namespace EvianBL
         }
 
         #region #1 Saldo de Todas as Contas (Consolidado) + AReceber e APagar (hoje)
-        public FluxoCaixaSaldo GetSaldos(DateTime dataFinal)
+        public FluxoCaixaSaldoDTO GetSaldos(DateTime dataFinal)
         {
             var saldoTodasAsContas = _unitOfWork.SaldoHistoricoBL.GetSaldos().FirstOrDefault(x => x.ContaBancariaId == Guid.Empty).SaldoConsolidado;
             var dataBase = dataFinal;
@@ -48,7 +48,7 @@ namespace EvianBL
 
             var saldoProjetado = totalAReceber + (totalAPagar * -1) + saldoTodasAsContas;
 
-            return new FluxoCaixaSaldo()
+            return new FluxoCaixaSaldoDTO()
             {
                 SaldoAtual = Math.Round(saldoTodasAsContas, 2),
                 TotalRecebimentos = Math.Round(totalAReceber, 2),
@@ -59,7 +59,7 @@ namespace EvianBL
         #endregion
 
         #region #2 Projeção do Fluxo de Caixa
-        public List<FluxoCaixaProjecao> GetProjecao(DateTime dataInicial, DateTime dataFinal, DateGroupType groupType)
+        public List<FluxoCaixaProjecaoDTO> GetProjecao(DateTime dataInicial, DateTime dataFinal, DateGroupType groupType)
         {
             var saldoInicial = _unitOfWork.SaldoHistoricoBL.GetSaldos().FirstOrDefault(x => x.ContaBancariaId == Guid.Empty).SaldoConsolidado;
             var dataInicialVencidas = dataInicial.AddDays(-1);
@@ -93,7 +93,7 @@ namespace EvianBL
 
             var projecaoFluxoCaixa = (from cc in allContasFinanceiras
                                       group cc by cc.Data into g
-                                      select new FluxoCaixaProjecao()
+                                      select new FluxoCaixaProjecaoDTO
                                       {
                                           Label = g.Key.ToString("dd/MM/yyyy"),
                                           Data = g.Key,
@@ -111,7 +111,7 @@ namespace EvianBL
             //var projecaoGroupped = projecaoFluxoCaixa;
             projecaoFluxoCaixa = ResolveGroup(projecaoFluxoCaixa, groupType);
 
-            var aggregator = new AggregatorSaldos() { SumSaldoConsolidado = saldoInicial };
+            var aggregator = new AggregatorSaldosDTO { SumSaldoConsolidado = saldoInicial };
             var aggregatorResult = projecaoFluxoCaixa.Aggregate(aggregator, (output, item) =>
             {
                 output.SumSaldoConsolidado += (item.TotalRecebimentos - item.TotalPagamentos);
@@ -132,7 +132,7 @@ namespace EvianBL
             return char.ToUpper(monthName[0]) + monthName.Substring(1);
         }
 
-        private List<FluxoCaixaProjecao> ResolveGroup(List<FluxoCaixaProjecao> items, DateGroupType groupType)
+        private List<FluxoCaixaProjecaoDTO> ResolveGroup(List<FluxoCaixaProjecaoDTO> items, DateGroupType groupType)
         {
             switch (groupType)
             {
@@ -149,7 +149,7 @@ namespace EvianBL
                 //    }).ToList();
                 case DateGroupType.Month:
                     return items.GroupBy(cc => new { cc.Data.Month, cc.Data.Year })
-                        .Select(g => new FluxoCaixaProjecao()
+                        .Select(g => new FluxoCaixaProjecaoDTO
                         {
                             Label = $"{GetMonthName(g.Key.Month)}/{g.Key.Year}",
                             TotalPagamentos = Math.Round(g.Sum(x => x.TotalPagamentos), 2),
@@ -157,7 +157,7 @@ namespace EvianBL
                         }).ToList();
                 case DateGroupType.Quarter:
                     return items.GroupBy(cc => new { Quarter = (cc.Data.Month - 1) / 3, cc.Data.Year })
-                        .Select(g => new FluxoCaixaProjecao()
+                        .Select(g => new FluxoCaixaProjecaoDTO
                         {
                             Label = $"T{g.Key.Quarter + 1}/{g.Key.Year}",
                             TotalPagamentos = Math.Round(g.Sum(x => x.TotalPagamentos), 2),
@@ -165,7 +165,7 @@ namespace EvianBL
                         }).ToList();
                 case DateGroupType.Halfyear:
                     return items.GroupBy(cc => new { Halfyear = (cc.Data.Month - 1) / 6, cc.Data.Year })
-                        .Select(g => new FluxoCaixaProjecao()
+                        .Select(g => new FluxoCaixaProjecaoDTO
                         {
                             Label = $"S{g.Key.Halfyear + 1}/{g.Key.Year}",
                             TotalPagamentos = Math.Round(g.Sum(x => x.TotalPagamentos), 2),
@@ -173,7 +173,7 @@ namespace EvianBL
                         }).ToList();
                 case DateGroupType.Year:
                     return items.GroupBy(cc => new { cc.Data.Year })
-                        .Select(g => new FluxoCaixaProjecao()
+                        .Select(g => new FluxoCaixaProjecaoDTO
                         {
                             Label = $"{g.Key.Year}",
                             TotalPagamentos = Math.Round(g.Sum(x => x.TotalPagamentos), 2),

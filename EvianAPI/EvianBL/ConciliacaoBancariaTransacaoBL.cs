@@ -1,20 +1,19 @@
-﻿using Evian.Entities;
-using Evian.Entities.DTO;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities;
+using Evian.Entities.Entities.DTO;
+using Evian.Entities.Entities.Enums;
 using Evian.Repository.Core;
 using System;
 using System.Linq;
 
 namespace EvianBL
 {
-    public class ConciliacaoBancariaTransacaoBL : EmpresaBL<ConciliacaoBancariaTransacao>
+    public class ConciliacaoBancariaTransacaoBL : EmpresaBL<ConciliacaoBancariaTransacaoDTO>
     {
-        private ContaPagar contaPagar { get; set; }
-        private ContaReceber contaReceber { get; set; }
+        private ContaFinanceira contaFinanceira { get; set; }
 
         public ConciliacaoBancariaTransacaoBL(ApplicationDbContext context, UnitOfWork unitOfWork) : base(context, unitOfWork) { }
 
-        public override void Insert(ConciliacaoBancariaTransacao entity)
+        public override void Insert(ConciliacaoBancariaTransacaoDTO entity)
         {
             try
             {
@@ -33,50 +32,35 @@ namespace EvianBL
                     throw new Exception("Condição de parcelamento inválida para a transação. Somente a vista.");
 
                 var conciliacaoBancariaId = _unitOfWork.ConciliacaoBancariaItemBL.All.Where(x => x.Id == entity.ConciliacaoBancariaItemId).FirstOrDefault().ConciliacaoBancariaId;
-                
+
                 var CBItemContaFinanceira = new ConciliacaoBancariaItemContaFinanceira()
                 {
                     ConciliacaoBancariaItemId = entity.ConciliacaoBancariaItemId,
                     ValorConciliado = entity.ValorConciliado,
                 };
 
+                contaFinanceira.Id = Guid.NewGuid();
+                contaFinanceira.ValorPrevisto = entity.ValorPrevisto;
+                contaFinanceira.CategoriaId = entity.CategoriaId;
+                contaFinanceira.FormaPagamentoId = entity.FormaPagamentoId;
+                contaFinanceira.CondicaoParcelamentoId = entity.CondicaoParcelamentoId;
+                contaFinanceira.PessoaId = entity.PessoaId;
+                contaFinanceira.DataEmissao = DateTime.Now;
+                contaFinanceira.DataVencimento = entity.DataVencimento;
+                contaFinanceira.Descricao = entity.Descricao;
+                contaFinanceira.StatusContaBancaria = StatusContaBancaria.Pago;
+                contaFinanceira.ValorPago = entity.ValorPrevisto;
+
                 if (entity.TipoContaFinanceira == "ContaPagar")
-                {
-                    contaPagar.Id = Guid.NewGuid();
-                    contaPagar.ValorPrevisto = entity.ValorPrevisto;
-                    contaPagar.CategoriaId = entity.CategoriaId;
-                    contaPagar.FormaPagamentoId = entity.FormaPagamentoId;
-                    contaPagar.CondicaoParcelamentoId = entity.CondicaoParcelamentoId;
-                    contaPagar.PessoaId = entity.PessoaId;
-                    contaPagar.DataEmissao = DateTime.Now;
-                    contaPagar.DataVencimento = entity.DataVencimento;
-                    contaPagar.Descricao = entity.Descricao;
-                    contaPagar.StatusContaBancaria = StatusContaBancaria.Pago;
-                    contaPagar.ValorPago = entity.ValorPrevisto;
-                    _unitOfWork.ContaPagarBL.Insert(contaPagar);
-
-                    contaPagar.ValorPago = null;
-                    CBItemContaFinanceira.ContaPagar = contaPagar;
-                }
+                    contaFinanceira.TipoContaFinanceira = TipoContaFinanceira.ContaPagar;
                 else
-                {
-                    contaReceber.Id = Guid.NewGuid();
-                    contaReceber.ValorPrevisto = entity.ValorPrevisto;
-                    contaReceber.CategoriaId = entity.CategoriaId;
-                    contaReceber.FormaPagamentoId = entity.FormaPagamentoId;
-                    contaReceber.CondicaoParcelamentoId = entity.CondicaoParcelamentoId;
-                    contaReceber.PessoaId = entity.PessoaId;
-                    contaReceber.DataEmissao = DateTime.Now;
-                    contaReceber.DataVencimento = entity.DataVencimento;
-                    contaReceber.Descricao = entity.Descricao;
-                    contaReceber.StatusContaBancaria = StatusContaBancaria.Pago;
-                    contaReceber.ValorPago = entity.ValorPrevisto;
-                    _unitOfWork.ContaReceberBL.Insert(contaReceber);
-                    
-                    contaReceber.ValorPago = null;
+                    contaFinanceira.TipoContaFinanceira = TipoContaFinanceira.ContaReceber;
 
-                    CBItemContaFinanceira.ContaReceber = contaReceber;
-                }
+                _unitOfWork.ContaFinanceiraBL.Insert(contaFinanceira);
+
+                contaFinanceira.ValorPago = null;
+
+                CBItemContaFinanceira.ContaFinanceira = contaFinanceira;
 
                 _unitOfWork.ConciliacaoBancariaItemContaFinanceiraBL.Insert(CBItemContaFinanceira);
 
@@ -87,12 +71,12 @@ namespace EvianBL
             }
         }
 
-        public override void Update(ConciliacaoBancariaTransacao entity)
+        public override void Update(ConciliacaoBancariaTransacaoDTO entity)
         {
             throw new Exception("Não é possível atualizar este tipo de registro");
         }
 
-        public override void Delete(ConciliacaoBancariaTransacao entity)
+        public override void Delete(ConciliacaoBancariaTransacaoDTO entity)
         {
             throw new Exception("Não é possível deletar este tipo de registro");
         }

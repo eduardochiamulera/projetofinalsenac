@@ -1,4 +1,4 @@
-﻿using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities.Enums;
 using System;
 
 namespace EvianBL

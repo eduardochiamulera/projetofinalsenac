@@ -1,6 +1,6 @@
-﻿using Evian.Entities.Base;
-using Evian.Entities.DTO;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities.Base;
+using Evian.Entities.Entities.DTO;
+using Evian.Entities.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +16,12 @@ namespace EvianBL
             _unitOfWork = unitOfWork;
         }
 
-        public List<MovimentacaoFinanceiraPorCategoria> Get(DateTime dataInicial,
+        public List<MovimentacaoFinanceiraPorCategoriaDTO> Get(DateTime dataInicial,
                                                   DateTime dataFinal,
                                                   bool somaRealizados = true,
                                                   bool somaPrevistos = true)
         {
-            var contasReceber = _unitOfWork.ContaReceberBL
+            var contasReceber = _unitOfWork.ContaFinanceiraBL
                                     .AllIncluding(c => c.Categoria)
                                     .Where(x => x.DataEmissao >= dataInicial &&
                                                 x.DataEmissao <= dataFinal)
@@ -36,7 +36,7 @@ namespace EvianBL
                                             x.ValorPago
                                         })
                                         .GroupBy(x => x.Categoria)
-                                        .Select(g => new MovimentacaoFinanceiraPorCategoria()
+                                        .Select(g => new MovimentacaoFinanceiraPorCategoriaDTO()
                                         {
                                             Categoria = g.Key.Descricao,
                                             CategoriaId = g.Key.Id,
@@ -53,7 +53,7 @@ namespace EvianBL
             var categoriasComReceita = contasReceber.Select(x => x.CategoriaId).Distinct();
             var categoriasSemReceita = _unitOfWork.CategoriaBL.All.Where(x => !categoriasComReceita.Contains(x.Id) && x.TipoCarteira == TipoCarteira.Receita);
             var receitasPorCategoriaZeradas = categoriasSemReceita
-                                                .Select(x => new MovimentacaoFinanceiraPorCategoria()
+                                                .Select(x => new MovimentacaoFinanceiraPorCategoriaDTO()
                                                 {
                                                     Categoria = x.Descricao,
                                                     CategoriaId = x.Id,
@@ -72,7 +72,7 @@ namespace EvianBL
                         .All
                         .Where(e => e.CategoriaPaiId == null &&
                                     e.TipoCarteira == TipoCarteira.Receita)
-                        .Select(x => new MovimentacaoFinanceiraPorCategoria()
+                        .Select(x => new MovimentacaoFinanceiraPorCategoriaDTO()
                         {
                             Categoria = x.Descricao,
                             CategoriaId = x.Id,
@@ -92,7 +92,7 @@ namespace EvianBL
                         .OrderBy(x => x.Categoria)
                         .ToList();
 
-            var listaOrdenada = new List<MovimentacaoFinanceiraPorCategoria>();
+            var listaOrdenada = new List<MovimentacaoFinanceiraPorCategoriaDTO>();
 
             foreach (var categoria in pais)
             {

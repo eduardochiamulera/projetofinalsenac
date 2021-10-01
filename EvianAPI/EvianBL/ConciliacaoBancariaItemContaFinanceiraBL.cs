@@ -1,5 +1,5 @@
-﻿using Evian.Entities;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities;
+using Evian.Entities.Entities.Enums;
 using Evian.Notifications;
 using Evian.Repository.Core;
 using Microsoft.EntityFrameworkCore;
@@ -21,10 +21,9 @@ namespace EvianBL
                 throw new Exception("Valor conciliado deve ser superior a zero");
             }
 
-            var contaReceber = entity.ContaReceberId != default(Guid) ? _unitOfWork.ContaReceberBL.All.FirstOrDefault(x => x.Id == entity.ContaReceberId) : entity.ContaReceber;
-            var contaPagar = entity.ContaPagarId != default(Guid) ? _unitOfWork.ContaPagarBL.All.FirstOrDefault(x => x.Id == entity.ContaPagarId) : entity.ContaPagar;
+            var contafinanceira = entity.ContaFinanceiraId != default(Guid) ? _unitOfWork.ContaFinanceiraBL.All.FirstOrDefault(x => x.Id == entity.ContaFinanceiraId) : entity.ContaFinanceira;            
 
-            if (contaReceber == null && contaPagar == null)
+            if (contafinanceira == null)
             {
                 throw new Exception("Conta financeira inválida");
             }
@@ -145,9 +144,9 @@ namespace EvianBL
 
         private void BaixarContaFinanceiraSugestao(ConciliacaoBancariaItemContaFinanceira entity)
         {
-            if (entity.ContaPagarId != null && entity.ContaPagarId != default(Guid) && entity.ContaPagar == null)
+            if (entity.ContaFinanceiraId != null && entity.ContaFinanceiraId != default(Guid) && entity.ContaFinanceira == null)
             {
-                var conta = _unitOfWork.ContaPagarBL.All.Where(x => x.Id == entity.ContaPagarId).FirstOrDefault();
+                var conta = _unitOfWork.ContaFinanceiraBL.All.Where(x => x.Id == entity.ContaFinanceiraId).FirstOrDefault();
                 if (conta != null)
                 {
                     var conciliacaoBancariaItem = _unitOfWork.ConciliacaoBancariaItemBL.All.FirstOrDefault(x => x.Id == entity.ConciliacaoBancariaItemId);
@@ -172,8 +171,7 @@ namespace EvianBL
             //mesma transacao, ainda não estava salvo para usar do contafinanceirabl.all.where 
             ValidaModel(entity, conciliacaoBancariaItem);
             BaixarContaFinanceiraSugestao(entity);
-            entity.ContaPagar = null;
-            entity.ContaReceber = null;
+            entity.ContaFinanceira = null;
 
             base.Insert(entity);
         }

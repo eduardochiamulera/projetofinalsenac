@@ -1,4 +1,4 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using Evian.Repository.Core;
 using System;
 using System.Linq;
@@ -104,6 +104,7 @@ namespace EvianBL
             }
 
             ValidaModel(entity);
+            base.Update(entity);
         }
 
         public virtual void Delete(TEntity entityToDelete)

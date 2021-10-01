@@ -1,6 +1,6 @@
-﻿using Evian.Entities;
-using Evian.Entities.DTO;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities;
+using Evian.Entities.Entities.DTO;
+using Evian.Entities.Entities.Enums;
 using Evian.Notifications;
 using Evian.Repository.Core;
 using System;
@@ -40,13 +40,13 @@ namespace EvianBL
                 case TipoCarteira.Despesa:
                     Debito(movimentacao.Data, movimentacao.Valor, 
                         movimentacao.ContaBancariaOrigemId.Value, 
-                        movimentacao.ContaPagarId, movimentacao.Descricao, 
+                        movimentacao.ContaFinanceiraId, movimentacao.Descricao, 
                         movimentacao.CategoriaId);
                     _unitOfWork.SaldoHistoricoBL.AtualizaSaldoHistorico(movimentacao.Data, (movimentacao.Valor), movimentacao.ContaBancariaOrigemId.Value, TipoCarteira.Despesa);
                     break;
                 case TipoCarteira.Receita:
                     Credito(movimentacao.Data, movimentacao.Valor, movimentacao.ContaBancariaDestinoId.Value, 
-                        movimentacao.ContaReceberId, movimentacao.Descricao, 
+                        movimentacao.ContaFinanceiraId, movimentacao.Descricao, 
                         movimentacao.CategoriaId);
                     _unitOfWork.SaldoHistoricoBL.AtualizaSaldoHistorico(movimentacao.Data, movimentacao.Valor, movimentacao.ContaBancariaDestinoId.Value, TipoCarteira.Receita);
                     break;
@@ -143,7 +143,7 @@ namespace EvianBL
             {
                 ContaBancariaDestinoId = new Guid?(),
                 ContaBancariaOrigemId = contaBancariaId,
-                ContaPagarId = contaFinanceiraId,
+                ContaFinanceiraId = contaFinanceiraId,
                 CategoriaId = categoriaId,
                 Data = data,
                 Valor = valor * -1,
@@ -160,7 +160,7 @@ namespace EvianBL
             {
                 ContaBancariaDestinoId = contaBancariaId,
                 ContaBancariaOrigemId = new Guid?(),
-                ContaReceberId = contaFinanceiraId,
+                ContaFinanceiraId = contaFinanceiraId,
                 CategoriaId = categoriaId,
                 Data = data,
                 Valor = valor,

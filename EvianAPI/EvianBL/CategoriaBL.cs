@@ -1,5 +1,5 @@
-﻿using Evian.Entities;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities;
+using Evian.Entities.Entities.Enums;
 using Evian.Notifications;
 using Evian.Repository.Core;
 using EvianBL;
@@ -18,8 +18,8 @@ namespace EvianBL
             var categoriaPaiIdAlterada = base.All.AsNoTracking().Where(x => x.Id == entity.Id).Any(x => x.CategoriaPaiId != entity.CategoriaPaiId);
             var previous = base.All.AsNoTracking().Where(x => x.Id == entity.Id).FirstOrDefault();
             bool categoriaTemFilho = base.All.Where(x => x.CategoriaPaiId == entity.Id).Any();
-            bool temContaReceberRelacionada = _unitOfWork.ContaReceberBL.All.Where(e => e.CategoriaId == entity.Id && e.TipoContaFinanceira == TipoContaFinanceira.ContaReceber  && e.Ativo).Any();
-            bool temContaPagarRelacionada = _unitOfWork.ContaPagarBL.All.Where(e => e.CategoriaId == entity.Id && e.TipoContaFinanceira == TipoContaFinanceira.ContaPagar && e.Ativo).Any();
+            bool temContaReceberRelacionada = _unitOfWork.ContaFinanceiraBL.All.Where(e => e.CategoriaId == entity.Id && e.TipoContaFinanceira == TipoContaFinanceira.ContaReceber  && e.Ativo).Any();
+            bool temContaPagarRelacionada = _unitOfWork.ContaFinanceiraBL.All.Where(e => e.CategoriaId == entity.Id && e.TipoContaFinanceira == TipoContaFinanceira.ContaPagar && e.Ativo).Any();
 
 
             entity.Fail((previous != null) && (entity.TipoCarteira != previous.TipoCarteira) && (temContaPagarRelacionada && entity.TipoCarteira == TipoCarteira.Receita) || (temContaReceberRelacionada && entity.TipoCarteira == TipoCarteira.Despesa), AlterarTipoInvalidaFK);

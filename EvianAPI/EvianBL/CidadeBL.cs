@@ -1,4 +1,4 @@
-﻿using Evian.Entities;
+﻿using Evian.Entities.Entities;
 using Evian.Repository.Core;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
