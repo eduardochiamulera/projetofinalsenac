@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EvianAPI", "EvianAPI\EvianAPI.csproj", "{2D67A812-03E8-4CFC-B6BD-0B18D7AF9891}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evian.API", "EvianAPI\Evian.API.csproj", "{2D67A812-03E8-4CFC-B6BD-0B18D7AF9891}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evian.Entities", "Evian.Entities\Evian.Entities.csproj", "{051CFD6E-5906-408F-AD60-87DFD6F409FD}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evian.Helpers", "Evian.Help
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evian.Repository", "Evian.Repository\Evian.Repository.csproj", "{371DEF14-0520-4672-8F8F-9053DBEA34D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvianBL", "EvianBL\EvianBL.csproj", "{F8E2F743-C8CA-478F-B37E-C7048C80161D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evian.BL", "EvianBL\Evian.BL.csproj", "{F8E2F743-C8CA-478F-B37E-C7048C80161D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
