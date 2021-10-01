@@ -40,12 +40,24 @@ namespace EvianAPI
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new PessoaProfile());
+                mc.AddProfile(new BancoProfile());
+                mc.AddProfile(new CategoriaProfile());
+                mc.AddProfile(new ConciliacaoBancariaItemContaFinanceiraProfile());
+                mc.AddProfile(new ConciliacaoBancariaItemProfile());
+                mc.AddProfile(new ConciliacaoBancariaProfile());
+                mc.AddProfile(new CondicaoParcelamentoProfile());
+                mc.AddProfile(new ContaBancariaProfile());
+                mc.AddProfile(new ContaFinanceiraBaixaMultiplaProfile());
+                mc.AddProfile(new ContaFinanceiraBaixaProfile());
+                mc.AddProfile(new ContaFinanceiraProfile());
+                mc.AddProfile(new EstadoProfile());
+                mc.AddProfile(new FormaPagamentoProfile());
+                mc.AddProfile(new PaisProfile());
+                mc.AddProfile(new TransferenciaFinanceiraProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
-
-            //services.AddAutoMapper(typeof(Startup));
 
             services.AddCors();
             services.AddSwaggerGen(c =>
@@ -70,35 +82,12 @@ namespace EvianAPI
             app.UseCors(option => { option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
             app.UseHttpsRedirection();
 
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}"
-            //        );
-            //});
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "",
-            //        pattern: "",
-            //        defaults: new { controller = "Index", action = "Home" }
-            //        );
-            //    endpoints.MapControllerRoute(
-            //        name: "cidade",
-            //        pattern: "cidade",
-            //        defaults: new { controller = "Cidade", action = "Get"}
-            //        );
-            //});
-
         }
     }
 }

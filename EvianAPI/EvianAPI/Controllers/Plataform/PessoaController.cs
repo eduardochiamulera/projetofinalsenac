@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Evian.Entities.Entities;
 using Evian.Entities.Entities.DTO;
+using EvianAPI.Controllers.Base;
 using EvianBL;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -18,23 +20,20 @@ using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
-namespace EvianAPI.Controllers
+namespace EvianAPI.Controllers.Platform
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PessoaController : ApiEmpresaController<Pessoa, PessoaBL>
+    public class PessoaController : ApiEmpresaBaseController<Pessoa, PessoaBL>
     {
-        private readonly IMapper _mapper;
-
-        public PessoaController(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
+        public PessoaController(IMapper mapper) : base(mapper) { }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(All().AsQueryable());
+            var entities = All().AsQueryable();
+            var result = _mapper.Map<List<PessoaDTO>>(entities);
+            return Ok(result);
         }
 
         [HttpGet("{key}")]

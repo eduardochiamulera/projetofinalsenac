@@ -7,7 +7,7 @@ namespace Evian.Entities.Entities.Adapters
     {
         public CidadeProfile()
         {
-            CreateMap<CidadeDTO, Cidade>()
+            CreateMap<CidadeDTO, Pais>()
                 .ForMember(p => p.DataInclusao, option => option.Ignore())
                 .ForMember(p => p.DataAlteracao, option => option.Ignore())
                 .ForMember(p => p.DataExclusao, option => option.Ignore())

@@ -43,7 +43,7 @@ namespace Evian.Entities.Entities
 
         public bool Fornecedor { get; set; }
 
-        public virtual Cidade Cidade { get; set; }
+        public virtual Pais Cidade { get; set; }
 
         public virtual Estado Estado { get; set; }
 

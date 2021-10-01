@@ -1,16 +1,19 @@
-﻿using Evian.Entities.Entities.Base;
+﻿using AutoMapper;
+using Evian.Entities.Entities.Base;
 using Evian.Notifications;
 using EvianBL;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Linq;
 
-namespace EvianAPI.Controllers
+namespace EvianAPI.Controllers.Base
 {
-    public class ApiEmpresaController<TEntity, TBL> : ApiDomainController<TEntity, TBL> 
+    public class ApiEmpresaBaseController<TEntity, TBL> : ApiDomainBaseController<TEntity, TBL> 
         where TEntity : EmpresaBase, new()
         where TBL : EmpresaBL<TEntity>
     {
+        public ApiEmpresaBaseController(IMapper mapper) : base(mapper) { }
+
         protected void Insert(TEntity entity)
         {
             UnitOfWork.GetGenericBL<TBL>().Insert(entity);

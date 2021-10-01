@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace EvianAPI.Controllers
+namespace EvianAPI.Controllers.Base
 {
     public abstract class ApiBaseController<TEntity> : ControllerBase where TEntity : DomainBase, new()
     {

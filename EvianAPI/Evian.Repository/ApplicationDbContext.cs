@@ -48,7 +48,7 @@ namespace Evian.Repository.Core
         }
 
         public DbSet<Pais> Pais { get; set; }
-        public DbSet<Cidade> Cidades { get; set; }
+        public DbSet<Pais> Cidades { get; set; }
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<Banco> Bancos { get; set; }
         public DbSet<ContaBancaria> ContasBancarias { get; set; }

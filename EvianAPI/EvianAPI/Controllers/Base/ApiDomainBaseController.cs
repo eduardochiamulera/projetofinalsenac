@@ -1,15 +1,22 @@
-﻿using Evian.Entities.Entities.Base;
+﻿using AutoMapper;
+using Evian.Entities.Entities.Base;
 using EvianBL;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EvianAPI.Controllers
+namespace EvianAPI.Controllers.Base
 {
-    public class ApiDomainController<TEntity, TBL> : ApiBaseController<TEntity> 
+    public class ApiDomainBaseController<TEntity, TBL> : ApiBaseController<TEntity> 
         where TEntity : DomainBase, new()
         where TBL : GenericDomainBaseBL<TEntity>
     {
         private UnitOfWork _unitOfWork;
+        protected readonly IMapper _mapper;
+
+        public ApiDomainBaseController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
         protected UnitOfWork UnitOfWork
         {

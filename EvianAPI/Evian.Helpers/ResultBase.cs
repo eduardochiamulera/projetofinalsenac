@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Evian.Helpers
 {
@@ -23,10 +19,10 @@ namespace Evian.Helpers
             }
         }
 
-        [JsonProperty("@odata.context")]
+        [JsonProperty("context")]
         public string _Context { get; set; }
 
-        [JsonProperty("@odata.nextLink")]
+        [JsonProperty("nextLink")]
         public string _NextLink { get; set; }
     }
 }
