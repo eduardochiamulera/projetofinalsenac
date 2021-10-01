@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Evian.Entities.DTO
+namespace Evian.Entities.Entities.DTO
 {
-    public class FluxoCaixaSaldo
+    public class FluxoCaixaSaldoDTO
     {
         [JsonProperty("saldoAtual")]
         public decimal SaldoAtual { get; set; }

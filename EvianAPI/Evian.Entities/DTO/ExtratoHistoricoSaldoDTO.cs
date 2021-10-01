@@ -2,15 +2,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace Evian.Entities.DTO
+namespace Evian.Entities.Entities.DTO
 {
-    public class AggregatorSaldos
+    public class AggregatorSaldosDTO
     {
         public decimal SumSaldoConsolidado { get; set; }
 
         public List<decimal> SaldoConsolidado { get; set; }
 
-        public AggregatorSaldos()
+        public AggregatorSaldosDTO()
         {
             SaldoConsolidado = new List<decimal>();
 
@@ -18,7 +18,7 @@ namespace Evian.Entities.DTO
         }
     }
 
-    public class ExtratoHistoricoSaldo
+    public class ExtratoHistoricoSaldoDTO
     {
         [JsonProperty("contaBancariaId")]
         public Guid ContaBancariaId { get; set; }
@@ -27,15 +27,15 @@ namespace Evian.Entities.DTO
         public string ContaBancariaDescricao { get; set; }
 
         [JsonProperty("saldos")]
-        public List<ExtratoSaldoHistoricoItem> Saldos { get; set; }
+        public List<ExtratoSaldoHistoricoItemDTO> Saldos { get; set; }
 
-        public ExtratoHistoricoSaldo()
+        public ExtratoHistoricoSaldoDTO()
         {
-            this.Saldos = new List<ExtratoSaldoHistoricoItem>();
+            this.Saldos = new List<ExtratoSaldoHistoricoItemDTO>();
         }
     }
 
-    public class ExtratoSaldoHistoricoItem
+    public class ExtratoSaldoHistoricoItemDTO
     {
         [JsonProperty("data")]
         public DateTime Data { get; set; }

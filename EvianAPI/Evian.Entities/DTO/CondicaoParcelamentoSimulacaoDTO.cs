@@ -2,13 +2,13 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Evian.Entities.DTO
+namespace Evian.Entities.Entities.DTO
 {
-    public class CondicaoParcelamentoSimulacao
+    public class CondicaoParcelamentoSimulacaoDTO
     {
         [NotMapped]
         [JsonProperty("valorReferencia")]
-        public double ValorReferencia { get; set; }
+        public decimal ValorReferencia { get; set; }
 
         [NotMapped]
         [JsonProperty("dataReferencia")]

@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Evian.Entities.DTO
+namespace Evian.Entities.Entities.DTO
 {
-    public class FluxoCaixaProjecao
+    public class FluxoCaixaProjecaoDTO
     {
         [JsonIgnore]
         public DateTime Data { get; set; }

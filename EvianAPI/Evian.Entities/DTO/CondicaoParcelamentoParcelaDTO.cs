@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Evian.Entities.DTO
+namespace Evian.Entities.Entities.DTO
 {
-    public class CondicaoParcelamentoParcela
+    public class CondicaoParcelamentoParcelaDTO
     {
         public string DescricaoParcela { get; set; }
 

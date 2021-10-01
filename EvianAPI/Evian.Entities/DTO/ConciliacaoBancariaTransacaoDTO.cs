@@ -1,11 +1,11 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Evian.Entities.DTO
+namespace Evian.Entities.Entities.DTO
 {
-    public class ConciliacaoBancariaTransacao : EmpresaBase
+    public class ConciliacaoBancariaTransacaoDTO : EmpresaBase
     {
         [JsonProperty("conciliacaoBancariaItemId")]
         public Guid ConciliacaoBancariaItemId { get; set; }

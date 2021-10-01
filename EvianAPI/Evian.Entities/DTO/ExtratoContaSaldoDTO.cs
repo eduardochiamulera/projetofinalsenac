@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Evian.Entities.DTO
+namespace Evian.Entities.Entities.DTO
 {
-    public class ExtratoContaSaldo
+    public class ExtratoContaSaldoDTO
     {
         [JsonProperty("contaBancariaId")]
         public Guid ContaBancariaId { get; set; }
