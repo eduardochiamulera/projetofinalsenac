@@ -1,4 +1,4 @@
-﻿using Evian.Entities.Entities.Enums;
+﻿using Evian.Entities.Enums;
 using Evian.Helpers;
 using Evian.Repository.Core;
 using System;

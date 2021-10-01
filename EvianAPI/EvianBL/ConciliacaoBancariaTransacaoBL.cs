@@ -1,6 +1,6 @@
 ﻿using Evian.Entities.Entities;
 using Evian.Entities.Entities.DTO;
-using Evian.Entities.Entities.Enums;
+using Evian.Entities.Enums;
 using Evian.Repository.Core;
 using System;
 using System.Linq;

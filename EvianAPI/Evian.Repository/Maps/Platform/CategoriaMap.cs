@@ -1,5 +1,5 @@
 ﻿using Evian.Entities.Entities;
-using Evian.Entities.Entities.Enums;
+using Evian.Entities.Enums;
 using Evian.Repository.Maps.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

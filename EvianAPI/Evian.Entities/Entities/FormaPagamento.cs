@@ -1,5 +1,5 @@
 ﻿using Evian.Entities.Entities.Base;
-using Evian.Entities.Entities.Enums;
+using Evian.Entities.Enums;
 using Evian.Helpers;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;

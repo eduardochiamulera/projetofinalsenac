@@ -1,5 +1,6 @@
 ﻿using Evian.Entities.Entities.DTO;
-using Evian.Entities.Entities.Enums;
+using Evian.Entities.Enums;
+using Evian.Entities.Enums;
 using Evian.Repository.Core;
 using EvianBL;
 using Microsoft.EntityFrameworkCore;
