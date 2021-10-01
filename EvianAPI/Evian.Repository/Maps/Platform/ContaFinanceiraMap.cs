@@ -1,21 +1,21 @@
-﻿using Evian.Entities;
-using Evian.Entities.Enums;
+﻿using Evian.Entities.Entities;
+using Evian.Entities.Entities.Enums;
 using Evian.Repository.Maps.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Evian.Repository.Maps.Platform
 {
-    public class ContaPagarMap : EmpresaBaseMap<ContaPagar> 
+    public class ContaFinanceiraMap : EmpresaBaseMap<ContaFinanceira> 
     {
-        public ContaPagarMap() : base("conta_pagar") {}
-        public override void Configure(EntityTypeBuilder<ContaPagar> builder)
+        public ContaFinanceiraMap() : base("conta_pagar") {}
+        public override void Configure(EntityTypeBuilder<ContaFinanceira> builder)
         {
             base.Configure(builder);
 
-            //builder.Property(x => x.ContaPagarRepeticaoPaiId).HasColumnName("conta_pagar_pai_id").HasMaxLength(36);
+            builder.Property(x => x.ContaFinanceiraRepeticaoPaiId).HasColumnName("conta_pagar_pai_id").HasMaxLength(36);
             
-            //builder.Property(x => x.ContaPagarParcelaPaiId).HasColumnName("conta_pagar_parcela_pai_id").HasMaxLength(36);
+            builder.Property(x => x.ContaFinanceiraParcelaPaiId).HasColumnName("conta_pagar_parcela_pai_id").HasMaxLength(36);
 
             builder.Property(x => x.ValorPrevisto).HasColumnName("valor_previsto").IsRequired();
             builder.Property(x => x.ValorPago).HasColumnName("valor_pago");
@@ -45,7 +45,7 @@ namespace Evian.Repository.Maps.Platform
             builder.Property(x => x.Repetir).HasColumnName("repetir").IsRequired();
             builder.Property(x => x.Numero).HasColumnName("numero").IsRequired().ValueGeneratedOnAddOrUpdate();
 
-            builder.HasOne(x => x.MovimentacaoFinanceira).WithOne(x => x.ContaPagar).HasForeignKey<MovimentacaoFinanceira>(x => x.ContaPagarId);
+            builder.HasOne(x => x.MovimentacaoFinanceira).WithOne(x => x.ContaFinanceira).HasForeignKey<MovimentacaoFinanceira>(x => x.ContaFinanceiraId);
 
         }
     }

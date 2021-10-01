@@ -1,4 +1,4 @@
-﻿using Evian.Entities;
+﻿using Evian.Entities.Entities;
 using Evian.Repository.Maps.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -18,11 +18,8 @@ namespace Evian.Repository.Maps.Platform
             builder.Property(x => x.ConciliacaoBancariaItemId).HasColumnName("conciliacao_bancaria_id").HasMaxLength(36).IsRequired();
             builder.HasOne(x => x.ConciliacaoBancariaItem).WithOne().HasForeignKey<ConciliacaoBancariaItem>();
 
-            builder.Property(x => x.ContaPagarId).HasColumnName("conta_pagar_id").HasMaxLength(36);
-            builder.HasOne(x => x.ContaPagar).WithMany().HasForeignKey(x => x.ContaPagarId);
-
-            builder.Property(x => x.ContaReceberId).HasColumnName("conta_receber_id").HasMaxLength(36);
-            builder.HasOne(x => x.ContaReceber).WithMany().HasForeignKey(x => x.ContaReceberId);
+            builder.Property(x => x.ContaFinanceiraId).HasColumnName("conta_financeira_id").HasMaxLength(36);
+            builder.HasOne(x => x.ContaFinanceira).WithMany().HasForeignKey(x => x.ContaFinanceiraId);
 
             builder.Property(x => x.ContaFinanceiraBaixaId).HasColumnName("conta_financeira_baixa_id").HasMaxLength(36).IsRequired();
         }

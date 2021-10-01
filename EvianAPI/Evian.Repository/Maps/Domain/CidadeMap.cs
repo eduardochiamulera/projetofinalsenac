@@ -1,4 +1,4 @@
-﻿using Evian.Entities;
+﻿using Evian.Entities.Entities;
 using Evian.Repository.Maps.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -1,4 +1,4 @@
-﻿using Evian.Entities;
+﻿using Evian.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -47,19 +47,12 @@ namespace Evian.Repository.Core
             EmpresaId = initialize.EmpresaId;
         }
 
-                public DbSet<ContaPagar> ContaPagars { get; set; }
-        public DbSet<ContaReceber> ContaRecebers { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-
-            modelBuilder.Entity<ContaPagar>().Ignore(m => m.ContaPagarParcelaPai);
-            modelBuilder.Entity<ContaPagar>().Ignore(m => m.ContaPagarRepeticaoPai);
-            modelBuilder.Entity<ContaReceber>().Ignore(m => m.ContaReceberParcelaPai);
-            modelBuilder.Entity<ContaReceber>().Ignore(m => m.ContaReceberRepeticaoPai);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

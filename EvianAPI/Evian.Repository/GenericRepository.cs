@@ -1,4 +1,4 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using Evian.Repository.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -73,7 +73,12 @@ namespace Evian.Repository.Core
 
         public virtual TEntity Find(object id)
         {
-            return dbSet.Find(id);
+            var obj = dbSet.Find(id);
+            
+            if (obj != null && obj.Ativo)
+                return obj;
+            
+            return null;
         }
 
         public virtual ValueTask<TEntity> FindAsync(object id)

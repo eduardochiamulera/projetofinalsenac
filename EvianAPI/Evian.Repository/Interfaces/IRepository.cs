@@ -1,4 +1,4 @@
-﻿using Evian.Entities.Base;
+﻿using Evian.Entities.Entities.Base;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using Evian.Entities;
+﻿using Evian.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
