@@ -24,15 +24,15 @@ namespace EvianAPI.Controllers.Platform
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EstadoFormaPagamentoController : ApiEmpresaBaseController<EstadoFormaPagamento, EstadoFormaPagamentoBL>
+    public class FormaPagamentoController : ApiEmpresaBaseController<FormaPagamento, FormaPagamentoBL>
     {
-        public EstadoFormaPagamentoController(IMapper mapper) : base(mapper) { }
+        public FormaPagamentoController(IMapper mapper) : base(mapper) { }
 
         [HttpGet]
         public IActionResult Get()
         {
             var entities = All().AsQueryable();
-            var result = _mapper.Map<List<EstadoFormaPagamentoDTO>>(entities);
+            var result = _mapper.Map<List<FormaPagamentoDTO>>(entities);
             return Ok(result);
         }
 
@@ -50,12 +50,12 @@ namespace EvianAPI.Controllers.Platform
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Post([FromBody]EstadoFormaPagamentoDTO model)
+        public virtual async Task<IActionResult> Post([FromBody]FormaPagamentoDTO model)
         {
             if (model == null)
                 return BadRequest(ModelState);
 
-            var entity = _mapper.Map<EstadoFormaPagamento>(model);
+            var entity = _mapper.Map<FormaPagamento>(model);
 
             ModelState.Clear();
 
@@ -66,13 +66,13 @@ namespace EvianAPI.Controllers.Platform
 
             await UnitSave();
 
-            model = _mapper.Map<EstadoFormaPagamentoDTO>(entity);
+            model = _mapper.Map<FormaPagamentoDTO>(entity);
 
             return Created("", model);
         }
 
         [HttpPut("{key}")]
-        public virtual async Task<IActionResult> Put(Guid key, [FromBody] EstadoFormaPagamentoDTO model)
+        public virtual async Task<IActionResult> Put(Guid key, [FromBody] FormaPagamentoDTO model)
         {
             if (model == null || key == default(Guid) || key == null)
                 return BadRequest(ModelState);
@@ -82,7 +82,7 @@ namespace EvianAPI.Controllers.Platform
             if (entity == null || !entity.Ativo)
                 throw new Exception("Registro não encontrado ou já excluído");
 
-            entity = _mapper.Map<EstadoFormaPagamentoDTO, EstadoFormaPagamento>(model, entity);
+            entity = _mapper.Map<FormaPagamentoDTO, FormaPagamento>(model, entity);
             
             ModelState.Clear();
             Update(entity);
@@ -129,7 +129,7 @@ namespace EvianAPI.Controllers.Platform
         }
 
         [HttpPatch("{key}")]
-        public virtual async Task<IActionResult> Patch(Guid key, [FromBody] JsonPatchDocument<EstadoFormaPagamentoDTO> model)
+        public virtual async Task<IActionResult> Patch(Guid key, [FromBody] JsonPatchDocument<FormaPagamentoDTO> model)
         {
             if (model == null || key == default(Guid) || key == null)
                 return BadRequest(ModelState);
@@ -139,13 +139,13 @@ namespace EvianAPI.Controllers.Platform
             if (entity == null || !entity.Ativo)
                 throw new Exception("Registro não encontrado ou já excluído");
             
-            var EstadoFormaPagamentoDTO = new EstadoFormaPagamentoDTO();
+            var FormaPagamentoDTO = new FormaPagamentoDTO();
             
-            EstadoFormaPagamentoDTO = _mapper.Map<EstadoFormaPagamentoDTO>(entity);
+            FormaPagamentoDTO = _mapper.Map<FormaPagamentoDTO>(entity);
 
-            model.ApplyTo(EstadoFormaPagamentoDTO);
+            model.ApplyTo(FormaPagamentoDTO);
             
-            entity = _mapper.Map<EstadoFormaPagamentoDTO, EstadoFormaPagamento>(EstadoFormaPagamentoDTO, entity);
+            entity = _mapper.Map<FormaPagamentoDTO, FormaPagamento>(FormaPagamentoDTO, entity);
 
             ModelState.Clear();
 
@@ -166,7 +166,7 @@ namespace EvianAPI.Controllers.Platform
                     throw;
             }
 
-            var result = _mapper.Map<EstadoFormaPagamentoDTO>(entity);
+            var result = _mapper.Map<FormaPagamentoDTO>(entity);
 
             return Ok(result);
         }

@@ -24,15 +24,15 @@ namespace EvianAPI.Controllers.Platform
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PessoaController : ApiEmpresaBaseController<Pessoa, PessoaBL>
+    public class SaldoHistoricoController : ApiEmpresaBaseController<SaldoHistorico, SaldoHistoricoBL>
     {
-        public PessoaController(IMapper mapper) : base(mapper) { }
+        public SaldoHistoricoController(IMapper mapper) : base(mapper) { }
 
         [HttpGet]
         public IActionResult Get()
         {
             var entities = All().AsQueryable();
-            var result = _mapper.Map<List<PessoaDTO>>(entities);
+            var result = _mapper.Map<List<SaldoHistorico>>(entities);
             return Ok(result);
         }
 
@@ -50,12 +50,12 @@ namespace EvianAPI.Controllers.Platform
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Post([FromBody]PessoaDTO model)
+        public virtual async Task<IActionResult> Post([FromBody]SaldoHistorico model)
         {
             if (model == null)
                 return BadRequest(ModelState);
 
-            var entity = _mapper.Map<Pessoa>(model);
+            var entity = _mapper.Map<SaldoHistorico>(model);
 
             ModelState.Clear();
 
@@ -66,13 +66,13 @@ namespace EvianAPI.Controllers.Platform
 
             await UnitSave();
 
-            model = _mapper.Map<PessoaDTO>(entity);
+            model = _mapper.Map<SaldoHistorico>(entity);
 
             return Created("", model);
         }
 
         [HttpPut("{key}")]
-        public virtual async Task<IActionResult> Put(Guid key, [FromBody] PessoaDTO model)
+        public virtual async Task<IActionResult> Put(Guid key, [FromBody] SaldoHistorico model)
         {
             if (model == null || key == default(Guid) || key == null)
                 return BadRequest(ModelState);
@@ -82,7 +82,7 @@ namespace EvianAPI.Controllers.Platform
             if (entity == null || !entity.Ativo)
                 throw new Exception("Registro não encontrado ou já excluído");
 
-            entity = _mapper.Map<PessoaDTO, Pessoa>(model, entity);
+            entity = _mapper.Map<SaldoHistorico, SaldoHistorico>(model, entity);
             
             ModelState.Clear();
             Update(entity);
@@ -129,7 +129,7 @@ namespace EvianAPI.Controllers.Platform
         }
 
         [HttpPatch("{key}")]
-        public virtual async Task<IActionResult> Patch(Guid key, [FromBody] JsonPatchDocument<PessoaDTO> model)
+        public virtual async Task<IActionResult> Patch(Guid key, [FromBody] JsonPatchDocument<SaldoHistorico> model)
         {
             if (model == null || key == default(Guid) || key == null)
                 return BadRequest(ModelState);
@@ -139,13 +139,13 @@ namespace EvianAPI.Controllers.Platform
             if (entity == null || !entity.Ativo)
                 throw new Exception("Registro não encontrado ou já excluído");
             
-            var pessoaDTO = new PessoaDTO();
+            var SaldoHistoricoDTO = new SaldoHistorico();
             
-            pessoaDTO = _mapper.Map<PessoaDTO>(entity);
+            SaldoHistoricoDTO = _mapper.Map<SaldoHistorico>(entity);
 
-            model.ApplyTo(pessoaDTO);
+            model.ApplyTo(SaldoHistoricoDTO);
             
-            entity = _mapper.Map<PessoaDTO, Pessoa>(pessoaDTO, entity);
+            entity = _mapper.Map<SaldoHistorico, SaldoHistorico>(SaldoHistoricoDTO, entity);
 
             ModelState.Clear();
 
@@ -166,7 +166,7 @@ namespace EvianAPI.Controllers.Platform
                     throw;
             }
 
-            var result = _mapper.Map<PessoaDTO>(entity);
+            var result = _mapper.Map<SaldoHistorico>(entity);
 
             return Ok(result);
         }
