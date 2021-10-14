@@ -3,7 +3,7 @@ using System;
 
 namespace Evian.Entities.Entities.DTO
 {
-    public class RelatorioCentroCustoCPCRDTO : EmpresaBaseDTO
+    public class RelatorioCentroCustoCPCRDTO : BaseDTO
     {
         [JsonProperty("descricao")]
         public string Descricao { get; set; }

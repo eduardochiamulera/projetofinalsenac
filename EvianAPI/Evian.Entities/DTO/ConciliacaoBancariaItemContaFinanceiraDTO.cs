@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Evian.Entities.Entities.DTO
 {
-    public class ConciliacaoBancariaItemContaFinanceiraDTO : EmpresaBaseDTO
+    public class ConciliacaoBancariaItemContaFinanceiraDTO : BaseDTO
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [JsonProperty("conciliacaoBancariaItemId")]

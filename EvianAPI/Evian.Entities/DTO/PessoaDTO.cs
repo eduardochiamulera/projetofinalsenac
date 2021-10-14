@@ -3,9 +3,9 @@ using System;
 
 namespace Evian.Entities.Entities.DTO
 {
-    public class PessoaDTO : EmpresaBaseDTO
+    public class PessoaDTO : BaseDTO
     {
-        //[JsonProperty("nome")]
+        [JsonProperty("nome")]
         public string Nome { get; set; }
 
         //Selecione o tipo de CGC CPF/CNPJ
@@ -69,7 +69,7 @@ namespace Evian.Entities.Entities.DTO
         public string NomeComercial { get; set; }
 
         //Informe se a pessoa que será cadastrada é um cliente.
-        //[JsonProperty("cliente")]
+        [JsonProperty("cliente")]
         public bool Cliente { get; set; }
 
         //Informe se a pessoa que será cadastrada é um fornecedor.

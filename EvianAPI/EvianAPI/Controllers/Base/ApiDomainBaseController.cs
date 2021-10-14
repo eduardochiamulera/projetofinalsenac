@@ -12,6 +12,7 @@ namespace EvianAPI.Controllers.Base
     {
         private UnitOfWork _unitOfWork;
         protected readonly IMapper _mapper;
+        protected const int PAGE_SIZE = 10;
 
         public ApiDomainBaseController(IMapper mapper)
         {

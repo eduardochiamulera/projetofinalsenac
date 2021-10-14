@@ -6,7 +6,7 @@ using System.Linq;
 namespace Evian.Entities.Entities.DTO
 {
     [Serializable]
-    public class ContaFinanceiraBaixaMultiplaDTO : EmpresaBaseDTO
+    public class ContaFinanceiraBaixaMultiplaDTO : BaseDTO
     {
         [JsonProperty("data")]
         public DateTime Data { get; set; }

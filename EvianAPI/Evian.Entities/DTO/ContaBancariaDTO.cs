@@ -4,7 +4,7 @@ using System;
 namespace Evian.Entities.Entities.DTO
 {
     [Serializable]
-    public class ContaBancariaDTO : EmpresaBaseDTO
+    public class ContaBancariaDTO : BaseDTO
     {
         [JsonProperty("nomeConta")]
         public string NomeConta { get; set; }

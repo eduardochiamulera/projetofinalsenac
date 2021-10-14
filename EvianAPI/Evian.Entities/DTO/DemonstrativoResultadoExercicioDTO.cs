@@ -3,7 +3,7 @@
 namespace Evian.Entities.Entities.DTO
 {
     [Serializable]
-    public class DemonstrativoResultadoExercicioDTO : EmpresaBaseDTO
+    public class DemonstrativoResultadoExercicioDTO : BaseDTO
     {
         public decimal ReceitasPrevistas { get; set; }
         public decimal DespesasPrevistas { get; set; }

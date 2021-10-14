@@ -117,6 +117,14 @@ namespace EvianBL
 
         #endregion
 
+        public IQueryable<Pessoa> BuscaPessoasPorTipo(bool ehCliente, int skipRecords, int pageSize)
+        {
+            if (ehCliente)
+                return All.Where(x => x.Cliente).Skip(skipRecords).Take(pageSize).AsQueryable();
+                
+            return All.Where(x => x.Fornecedor).Skip(skipRecords).Take(pageSize).AsQueryable();
+        }
+
         public override void Update(Pessoa entity)
         {
             ValidaModel(entity);

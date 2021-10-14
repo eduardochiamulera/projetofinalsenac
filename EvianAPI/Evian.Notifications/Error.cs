@@ -14,12 +14,12 @@ namespace Evian.Notifications
         [JsonIgnore]
         public NotificationType Type { get; set; }
 
-        [JsonProperty("type")]
-        public string TypeRest
-        {
-            get { return (Type.ToString().ToLower()); }
-            set { Type = (NotificationType)Enum.Parse(typeof(NotificationType), value); }
-        }
+        //[JsonProperty("type")]
+        //public string TypeRest
+        //{
+        //    get { return (Type.ToString().ToLower()); }
+        //    set { Type = (NotificationType)Enum.Parse(typeof(NotificationType), value); }
+        //}
 
         public Error(string pMessage, string dataFieldId = "", string id = "", NotificationType type = NotificationType.Error)
         {

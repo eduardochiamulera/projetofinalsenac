@@ -1,28 +1,45 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Evian.Helpers
 {
-    public class ResultBase<T>
+    public class PagedResult<T>
     {
-        [JsonProperty("total")]
-        public int Total { get; set; }
-
         [JsonProperty("data")]
-        public List<T> Data { get; set; }
+        public List<T> Data { get; private set; }
 
-        public bool HasNext
+        [JsonProperty("paging")]
+        public PagingInfo Paging { get; private set; }
+
+        public PagedResult(IEnumerable<T> items, int pageNo, int pageSize, long totalRecordCount)
         {
-            get
+            Data = items == null ? new List<T>() : new List<T>(items);
+
+            Paging = new PagingInfo
             {
-                return !string.IsNullOrWhiteSpace(_NextLink);
-            }
+                PageNo = pageNo,
+                PageSize = pageSize,
+                TotalRecordCount = totalRecordCount,
+                PageCount = totalRecordCount > 0
+                    ? (int)Math.Ceiling(totalRecordCount / (double)pageSize)
+                    : 0
+            };
         }
+    }
 
-        [JsonProperty("context")]
-        public string _Context { get; set; }
+    public class PagingInfo
+    {
+        [JsonProperty("pageNo")]
+        public int PageNo { get; set; }
 
-        [JsonProperty("nextLink")]
-        public string _NextLink { get; set; }
+        [JsonProperty("pageSize")]
+        public int PageSize { get; set; }
+
+        [JsonProperty("pageCount")]
+        public int PageCount { get; set; }
+
+        [JsonProperty("totalRecordCount")]
+        public long TotalRecordCount { get; set; }
     }
 }

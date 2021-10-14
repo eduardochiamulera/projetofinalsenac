@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Evian.Entities.Entities.DTO
 {
-    public class FormaPagamentoDTO : EmpresaBaseDTO
+    public class FormaPagamentoDTO : BaseDTO
     {
         [JsonProperty("descricao")]
         public string Descricao { get; set; }

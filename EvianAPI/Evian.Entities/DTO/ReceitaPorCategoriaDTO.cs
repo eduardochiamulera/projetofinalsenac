@@ -4,7 +4,7 @@ using System;
 
 namespace Evian.Entities.Entities.DTO
 {
-    public class ReceitaPorCategoriaDTO : EmpresaBaseDTO
+    public class ReceitaPorCategoriaDTO : BaseDTO
     {
         [JsonProperty("categoriaId")]
         public Guid CategoriaId { get; set; }

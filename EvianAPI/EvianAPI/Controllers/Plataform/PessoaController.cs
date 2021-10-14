@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Evian.Entities.Entities;
 using Evian.Entities.Entities.DTO;
+using Evian.Helpers;
 using EvianAPI.Controllers.Base;
 using EvianBL;
 using Microsoft.AspNetCore.JsonPatch;
@@ -36,16 +37,30 @@ namespace EvianAPI.Controllers.Platform
             return Ok(result);
         }
 
+        [HttpGet("pageNo/{pageNo}/{ehCliente}")]
+        public IActionResult Get(int pageNo, bool ehCliente)
+        {
+            var skipRecords = (pageNo - 1) * PAGE_SIZE;
+            var entities = UnitOfWork.PessoaBL.BuscaPessoasPorTipo(ehCliente, skipRecords, PAGE_SIZE);
+
+            var countRegister = entities.Count();
+            var result = _mapper.Map<List<PessoaDTO>>(entities);
+            return Ok(new PagedResult<PessoaDTO>(result, pageNo, PAGE_SIZE, countRegister));
+        }
+
         [HttpGet("{key}")]
         public IActionResult Get(Guid key)
         {
-            if (!All().Any(x => x.Id == key))
+            var entity = All().FirstOrDefault(x => x.Id == key);
+
+            if (entity is null)
             {
                 throw new Exception("Registro não encontrado ou já excluído");
             }
             else
             {
-                return Ok(SingleResult.Create(All().Where(x => x.Id == key)));
+                var result = _mapper.Map<PessoaDTO>(entity);
+                return Ok(result);
             }
         }
 
@@ -90,20 +105,9 @@ namespace EvianAPI.Controllers.Platform
             if (!ModelState.IsValid)
                 AddErrorModelState(ModelState);
 
-            //try
-            //{
-            //    await UnitSave();
+            model = _mapper.Map<Pessoa, PessoaDTO>(entity, model);
 
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!Exists(key))
-            //        return NotFound();
-            //    else
-            //        throw;
-            //}
-
-            return Ok();
+            return Ok(model);
         }
 
         [HttpDelete("{key}")]

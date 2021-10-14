@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Evian.Entities.Entities.DTO
 {
-    public class ConciliacaoBancariaDTO : EmpresaBaseDTO
+    public class ConciliacaoBancariaDTO : BaseDTO
     {
         [JsonProperty("contaBancariaId")]
         public Guid ContaBancariaId { get; set; }

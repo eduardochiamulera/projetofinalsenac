@@ -1,13 +1,9 @@
-﻿using Evian.Entities.Entities.Base;
-using Evian.Entities.Enums;
-using Evian.Helpers;
-using Newtonsoft.Json;
+﻿using Evian.Entities.Enums;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Evian.Entities.Entities.DTO
 {
-    public class MovimentacaoFinanceiraPorCategoriaDTO : EmpresaBaseDTO
+    public class MovimentacaoFinanceiraPorCategoriaDTO : BaseDTO
     {
         public Guid CategoriaId { get; set; }
         public string Categoria { get; set; }

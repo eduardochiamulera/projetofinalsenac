@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Evian.Entities.Entities.DTO
 {
     [Serializable]
-    public class MovimentacaoDTO : EmpresaBaseDTO
+    public class MovimentacaoDTO : BaseDTO
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [JsonProperty("data")]

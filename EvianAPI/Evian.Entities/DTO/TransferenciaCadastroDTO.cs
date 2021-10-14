@@ -4,7 +4,7 @@ using System;
 namespace Evian.Entities.Entities.DTO
 {
     [Serializable]
-    public class TransferenciaCadastroDTO : EmpresaBaseDTO
+    public class TransferenciaCadastroDTO : BaseDTO
     {
         [JsonProperty("categoriaDestinoId")]
         public Guid? CategoriaDestinoId { get; set; }

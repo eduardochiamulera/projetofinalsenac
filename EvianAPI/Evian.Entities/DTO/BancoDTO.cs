@@ -2,7 +2,7 @@
 
 namespace Evian.Entities.Entities.DTO
 {
-    public class BancoDTO : EmpresaBaseDTO
+    public class BancoDTO : BaseDTO
     {
         [JsonProperty("codigo")]
         public string Codigo { get; set; }

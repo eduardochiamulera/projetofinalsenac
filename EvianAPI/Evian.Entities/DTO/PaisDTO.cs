@@ -2,7 +2,7 @@
 
 namespace Evian.Entities.Entities.DTO
 {
-    public class PaisDTO : EmpresaBaseDTO
+    public class PaisDTO : BaseDTO
     {
         [JsonProperty("sigla")]
         public string Sigla { get; set; }
