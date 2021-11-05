@@ -161,6 +161,9 @@ namespace EvianBL
 
         private DashboardBL dashboardBL;
         public DashboardBL DashboardBL => dashboardBL ?? (dashboardBL = new DashboardBL(this));
+
+        private PaisBL paisBL;
+        public PaisBL PaisBL => paisBL ?? (paisBL = new PaisBL(_context));
         #endregion
     }
 }

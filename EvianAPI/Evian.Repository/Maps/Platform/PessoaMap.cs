@@ -38,6 +38,10 @@ namespace Evian.Repository.Maps.Platform
 
             builder.Property(x => x.PaisId).HasColumnName("pais_id").HasMaxLength(36);
             builder.HasOne(x => x.Pais).WithMany().HasForeignKey(x => x.PaisId);
+            
+            builder.Ignore(x => x.EstadoName);
+            builder.Ignore(x => x.PaisName);
+            builder.Ignore(x => x.CidadeName);
         }
     }
 }

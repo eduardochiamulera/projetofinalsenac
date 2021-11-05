@@ -54,6 +54,7 @@ namespace EvianAPI
                 mc.AddProfile(new ContaFinanceiraBaixaProfile());
                 mc.AddProfile(new ContaFinanceiraProfile());
                 mc.AddProfile(new EstadoProfile());
+                mc.AddProfile(new CidadeProfile());
                 mc.AddProfile(new FormaPagamentoProfile());
                 mc.AddProfile(new PaisProfile());
                 mc.AddProfile(new TransferenciaFinanceiraProfile());

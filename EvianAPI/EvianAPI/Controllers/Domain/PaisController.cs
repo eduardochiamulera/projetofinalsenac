@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Evian.Entities.Entities;
+using Evian.Entities.Entities.DTO;
 using EvianAPI.Controllers.Base;
 using EvianBL;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
@@ -19,7 +21,9 @@ namespace EvianAPI.Controllers.Domain
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(All().AsQueryable());
+            var paises = All().OrderBy(x => x.Nome);
+            var result = _mapper.Map<List<PaisDTO>>(paises);
+            return Ok(result);
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using Evian.Entities.Entities.Base;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Evian.Entities.Entities
 {
@@ -38,6 +39,15 @@ namespace Evian.Entities.Entities
         public string Email { get; set; }
 
         public string NomeComercial { get; set; }
+        
+        [NotMapped]
+        public string EstadoName { get; set; }
+
+        [NotMapped]
+        public string PaisName { get; set; }
+
+        [NotMapped]
+        public string CidadeName { get; set; }
 
         public bool Cliente { get; set; }
 

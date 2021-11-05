@@ -16,7 +16,6 @@ namespace Evian.Entities.Entities.Adapters
                 .ForMember(p => p.UsuarioExclusao, option => option.Ignore())
                 .ForMember(p => p.Ativo, option => option.Ignore())
                 .ForMember(p => p.Notification, option => option.Ignore())
-                .ForMember(p => p.Id, option => option.Ignore())
                 .ReverseMap();
         }
     }

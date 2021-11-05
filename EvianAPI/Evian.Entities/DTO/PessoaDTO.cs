@@ -36,14 +36,6 @@ namespace Evian.Entities.Entities.DTO
         [JsonProperty("bairro")]
         public string Bairro { get; set; }
 
-        //Município padrão
-        [JsonProperty("cidadeId")]
-        public Guid? CidadeId { get; set; }
-
-        //Informe o estado
-        [JsonProperty("estadoId")]
-        public Guid? EstadoId { get; set; }
-
         //Informe o Telefone
         [JsonProperty("telefone")]
         public string Telefone { get; set; }
@@ -77,12 +69,15 @@ namespace Evian.Entities.Entities.DTO
         public bool Fornecedor { get; set; }
 
         [JsonProperty("estado")]
-        public virtual EstadoDTO Estado { get; set; }
+        public string EstadoName { get; set; }
 
         [JsonProperty("pais")]
-        public virtual PaisDTO Pais { get; set; }
+        public string PaisName { get; set; }
+
+        [JsonProperty("paisId")]
+        public string PaisId { get; set; }
 
         [JsonProperty("cidade")]
-        public virtual CidadeDTO Cidade { get; set; }
+        public string CidadeName { get; set; }
     }
 }

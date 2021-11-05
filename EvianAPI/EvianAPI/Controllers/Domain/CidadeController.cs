@@ -4,6 +4,8 @@ using Evian.Entities.Entities.DTO;
 using EvianAPI.Controllers.Base;
 using EvianBL;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
@@ -17,12 +19,12 @@ namespace EvianAPI.Controllers.Domain
     {
         public CidadeController(IMapper mapper) : base(mapper){}
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("{estadoId}")]
+        public IActionResult Get(Guid estadoId)
         {
-            //var t = _ma
-                //All().AsQueryable()
-            return Ok();
+            var entities = All().Where(x => x.EstadoId == estadoId).AsQueryable();
+            var result = _mapper.Map<List<CidadeDTO>>(entities);
+            return Ok(result);
         }
 
         [HttpGet]

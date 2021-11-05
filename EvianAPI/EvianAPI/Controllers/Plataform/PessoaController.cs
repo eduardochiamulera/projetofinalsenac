@@ -51,7 +51,7 @@ namespace EvianAPI.Controllers.Platform
         [HttpGet("{key}")]
         public IActionResult Get(Guid key)
         {
-            var entity = All().FirstOrDefault(x => x.Id == key);
+            var entity = UnitOfWork.PessoaBL.AllIncluding(x => x.Pais, x => x.Cidade, x => x.Estado).FirstOrDefault(x => x.Id == key);
 
             if (entity is null)
             {

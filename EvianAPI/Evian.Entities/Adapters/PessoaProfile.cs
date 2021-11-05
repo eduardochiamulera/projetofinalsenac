@@ -21,7 +21,10 @@ namespace Evian.Entities.Entities.Adapters
                 .ForMember(p => p.Id, option => option.Ignore())
                 .ReverseMap();
 
-            //CreateMap<Pessoa, PessoaDTO>();
+            CreateMap<Pessoa, PessoaDTO>()
+                .ForMember(p => p.PaisName, m => m.MapFrom(a => a.Pais.Nome))
+                .ForMember(p => p.CidadeName, m => m.MapFrom(a => a.Cidade.Nome))
+                .ForMember(p => p.EstadoName, m => m.MapFrom(a => a.Estado.Nome));
         }
     }
 }
