@@ -39,21 +39,12 @@ namespace Evian.Entities.Entities
         public string Email { get; set; }
 
         public string NomeComercial { get; set; }
-        
-        [NotMapped]
-        public string EstadoName { get; set; }
-
-        [NotMapped]
-        public string PaisName { get; set; }
-
-        [NotMapped]
-        public string CidadeName { get; set; }
 
         public bool Cliente { get; set; }
 
         public bool Fornecedor { get; set; }
 
-        public virtual Pais Cidade { get; set; }
+        public virtual Cidade Cidade { get; set; }
 
         public virtual Estado Estado { get; set; }
 

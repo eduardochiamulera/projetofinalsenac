@@ -18,13 +18,12 @@ namespace Evian.Entities.Entities.Adapters
                 .ForMember(p => p.UsuarioExclusao, option => option.Ignore())
                 .ForMember(p => p.Ativo, option => option.Ignore())
                 .ForMember(p => p.Notification, option => option.Ignore())
-                .ForMember(p => p.Id, option => option.Ignore())
                 .ReverseMap();
 
             CreateMap<Pessoa, PessoaDTO>()
-                .ForMember(p => p.PaisName, m => m.MapFrom(a => a.Pais.Nome))
-                .ForMember(p => p.CidadeName, m => m.MapFrom(a => a.Cidade.Nome))
-                .ForMember(p => p.EstadoName, m => m.MapFrom(a => a.Estado.Nome));
+                .ForMember(p => p.PaisNome, m => m.MapFrom(a => a.Pais.Nome))
+                .ForMember(p => p.CidadeNome, m => m.MapFrom(a => a.Cidade.Nome))
+                .ForMember(p => p.EstadoNome, m => m.MapFrom(a => a.Estado.Nome));
         }
     }
 }

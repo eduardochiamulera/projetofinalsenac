@@ -31,7 +31,7 @@ namespace EvianBL
             ValidaFormatoDocumento(entity);
             ValidaFormatoCep(entity);
             entity.Fail(entity.Estado != null && !_unitOfWork.EstadoBL.All.Any(x => x.Sigla.Equals(entity.Estado.Sigla, StringComparison.CurrentCultureIgnoreCase)), SiglaEstadoInvalida);
-            ValidaCidade(entity, entity.Estado);
+            ValidaEndereco(entity);
             ValidaEmail(entity);
             ValidaCPFCNPJ(entity);
         }
@@ -93,11 +93,18 @@ namespace EvianBL
             entity.Fail(!Regex.IsMatch(entity.Email ?? "", pattern), EmailInvalido);
         }
 
-        protected void ValidaCidade(Pessoa entity, Estado estado)
+        protected void ValidaEndereco(Pessoa entity)
         {
-            entity.Fail(
-                entity.Cidade != null
-                && !_unitOfWork.CidadeBL.All.Any(x => x.EstadoId == entity.EstadoId && x.Nome.Equals(entity.Cidade.Nome, StringComparison.CurrentCultureIgnoreCase)), NomeCidadeInvalido);
+            if (entity.CidadeId == Guid.Empty)
+                entity.CidadeId = null;
+
+            if (entity.PaisId == Guid.Empty)
+                entity.PaisId = null;
+
+            if (entity.EstadoId == Guid.Empty)
+                entity.EstadoId = null;
+
+
         }
 
         public static Error TipoCadastroInvalido = new Error("Informe se ao menos a pessoa é um Cliente e/ou Fornecedor.");
@@ -117,36 +124,6 @@ namespace EvianBL
 
         #endregion
 
-        private void GetPais(Pessoa entity)
-        {
-            if (!string.IsNullOrWhiteSpace(entity.PaisName))
-            {
-                var pais = _unitOfWork.PaisBL.All.AsNoTracking().FirstOrDefault(x => x.Nome.ToUpper().Equals(entity.PaisName.ToUpper()));
-                if (!entity.PaisId.HasValue || (entity.PaisId != pais.Id))
-                    entity.PaisId = pais.Id;
-            }
-        }
-
-        private void GetCidade(Pessoa entity)
-        {
-            if (!string.IsNullOrWhiteSpace(entity.CidadeName))
-            {
-                var cidade = _unitOfWork.CidadeBL.All.AsNoTracking().FirstOrDefault(x => x.Nome.ToUpper().Equals(entity.CidadeName.ToUpper()));
-                if (!entity.CidadeId.HasValue || (entity.CidadeId != cidade.Id))
-                    entity.CidadeId = cidade.Id;
-            }
-        }
-
-        private void GetEstado(Pessoa entity)
-        {
-            if (!string.IsNullOrWhiteSpace(entity.EstadoName))
-            {
-                var estado = _unitOfWork.EstadoBL.All.AsNoTracking().FirstOrDefault(x => x.Nome.ToUpper().Equals(entity.EstadoName.ToUpper()));
-                if (!entity.EstadoId.HasValue || (entity.EstadoId != estado.Id))
-                    entity.EstadoId = estado.Id;
-            }
-        }
-
         public IQueryable<Pessoa> BuscaPessoasPorTipo(bool ehCliente, int skipRecords, int pageSize)
         {
             if (ehCliente)
@@ -157,9 +134,6 @@ namespace EvianBL
 
         public override void Update(Pessoa entity)
         {
-            GetEstado(entity);
-            GetCidade(entity);
-            GetPais(entity);
             ValidaModel(entity);
             if (!IsValid(entity))
             {
@@ -172,9 +146,6 @@ namespace EvianBL
 
         public override void Insert(Pessoa entity)
         {
-            GetEstado(entity);
-            GetCidade(entity);
-            GetPais(entity);
             ValidaModel(entity);
             if (!IsValid(entity))
             {

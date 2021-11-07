@@ -37,6 +37,22 @@ namespace EvianAPI.Controllers.Platform
             return Ok(result);
         }
 
+        [HttpGet("fornecedores")]
+        public IActionResult GetFornecedores()
+        {
+            var entities = All().Where(x => x.Fornecedor).AsQueryable();
+            var result = _mapper.Map<List<PessoaDTO>>(entities);
+            return Ok(result);
+        }
+
+        [HttpGet("clientes")]
+        public IActionResult GetClientes()
+        {
+            var entities = All().Where(x => x.Cliente).AsQueryable();
+            var result = _mapper.Map<List<PessoaDTO>>(entities);
+            return Ok(result);
+        }
+
         [HttpGet("pageNo/{pageNo}/{ehCliente}")]
         public IActionResult Get(int pageNo, bool ehCliente)
         {

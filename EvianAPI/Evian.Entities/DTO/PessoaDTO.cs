@@ -60,6 +60,15 @@ namespace Evian.Entities.Entities.DTO
         [JsonProperty("nomeComercial")]
         public string NomeComercial { get; set; }
 
+        [JsonProperty("paisNome")]
+        public string PaisNome { get; set; }
+
+        [JsonProperty("cidadeNome")]
+        public string CidadeNome { get; set; }
+
+        [JsonProperty("estadoNome")]
+        public string EstadoNome { get; set; }
+
         //Informe se a pessoa que será cadastrada é um cliente.
         [JsonProperty("cliente")]
         public bool Cliente { get; set; }
@@ -68,16 +77,13 @@ namespace Evian.Entities.Entities.DTO
         [JsonProperty("fornecedor")]
         public bool Fornecedor { get; set; }
 
-        [JsonProperty("estado")]
-        public string EstadoName { get; set; }
-
-        [JsonProperty("pais")]
-        public string PaisName { get; set; }
+        [JsonProperty("estadoId")]
+        public Guid EstadoId { get; set; }
 
         [JsonProperty("paisId")]
-        public string PaisId { get; set; }
+        public Guid PaisId { get; set; }
 
-        [JsonProperty("cidade")]
-        public string CidadeName { get; set; }
+        [JsonProperty("cidadeId")]
+        public Guid CidadeId { get; set; }
     }
 }
