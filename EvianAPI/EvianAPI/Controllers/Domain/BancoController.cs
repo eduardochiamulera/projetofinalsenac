@@ -4,6 +4,7 @@ using Evian.Entities.Entities.DTO;
 using EvianAPI.Controllers.Base;
 using EvianBL;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
@@ -20,8 +21,10 @@ namespace EvianAPI.Controllers.Domain
         [HttpGet]
         public IActionResult Get()
         {
-            var entities = _mapper.Map<BancoDTO>(All());
-            return Ok(entities);
+            var entities = All().AsQueryable();
+            var result = _mapper.Map<List<BancoDTO>>(entities);
+
+            return Ok(result);
         }
 
     }

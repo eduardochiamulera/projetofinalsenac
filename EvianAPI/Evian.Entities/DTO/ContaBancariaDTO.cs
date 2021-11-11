@@ -24,6 +24,9 @@ namespace Evian.Entities.Entities.DTO
         [JsonProperty("bancoId")]
         public Guid? BancoId { get; set; }
 
+        [JsonProperty("bancoNome")]
+        public string BancoNome { get; set; }
+
         [JsonProperty("banco")]
         public virtual BancoDTO Banco { get; set; }
 

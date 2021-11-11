@@ -39,13 +39,16 @@ namespace EvianAPI.Controllers.Platform
         [HttpGet("{key}")]
         public IActionResult Get(Guid key)
         {
-            if (!All().Any(x => x.Id == key))
+            var entity = UnitOfWork.ContaBancariaBL.AllIncluding(x => x.Banco).FirstOrDefault(x => x.Id == key);
+
+            if (entity is null)
             {
                 throw new Exception("Registro não encontrado ou já excluído");
             }
             else
             {
-                return Ok(SingleResult.Create(All().Where(x => x.Id == key)));
+                var result = _mapper.Map<ContaBancariaDTO>(entity);
+                return Ok(result);
             }
         }
 
@@ -90,20 +93,9 @@ namespace EvianAPI.Controllers.Platform
             if (!ModelState.IsValid)
                 AddErrorModelState(ModelState);
 
-            //try
-            //{
-            //    await UnitSave();
+            model = _mapper.Map<ContaBancaria, ContaBancariaDTO>(entity, model);
 
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!Exists(key))
-            //        return NotFound();
-            //    else
-            //        throw;
-            //}
-
-            return Ok();
+            return Ok(model);
         }
 
         [HttpDelete("{key}")]
