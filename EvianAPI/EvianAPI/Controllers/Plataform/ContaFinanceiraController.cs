@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Evian.Entities.Entities;
 using Evian.Entities.Entities.DTO;
+using Evian.Entities.Enums;
 using EvianAPI.Controllers.Base;
 using EvianBL;
 using Microsoft.AspNetCore.JsonPatch;
@@ -32,6 +33,22 @@ namespace EvianAPI.Controllers.Platform
         public IActionResult Get()
         {
             var entities = All().AsQueryable();
+            var result = _mapper.Map<List<ContaFinanceiraDTO>>(entities);
+            return Ok(result);
+        }
+
+        [HttpGet("contapagar")]
+        public IActionResult GetFornecedores()
+        {
+            var entities = All().Where(x => x.TipoContaFinanceira == TipoContaFinanceira.ContaPagar).AsQueryable();
+            var result = _mapper.Map<List<ContaFinanceiraDTO>>(entities);
+            return Ok(result);
+        }
+
+        [HttpGet("contareceber")]
+        public IActionResult GetClientes()
+        {
+            var entities = All().Where(x => x.TipoContaFinanceira == TipoContaFinanceira.ContaReceber).AsQueryable();
             var result = _mapper.Map<List<ContaFinanceiraDTO>>(entities);
             return Ok(result);
         }

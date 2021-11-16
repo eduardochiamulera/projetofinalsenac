@@ -79,22 +79,16 @@ namespace Evian.Entities.Entities.DTO
         [JsonProperty("contaFinanceiraRepeticaoPai")]
         public virtual ContaFinanceiraDTO ContaFinanceiraRepeticaoPai { get; set; }
 
-        [JsonProperty("contaFinanceiraRepeticaoPai")]
-        public virtual ContaFinanceiraDTO ContaFinanceiraParcelaPai { get; set; }
+        [JsonProperty("categoriaNome")]
+        public string CategoriaNome { get; set; }
 
-        [JsonProperty("categoria")]
-        public virtual CategoriaDTO Categoria { get; set; }
+        [JsonProperty("condicaoParcelamentoNome")]
+        public string CondicaoParcelamentoNome { get; set; }
 
-        [JsonProperty("condicaoParcelamento")]
-        public virtual CondicaoParcelamentoDTO CondicaoParcelamento { get; set; }
+        [JsonProperty("pessoaNome")]
+        public string PessoaNome { get; set; }
 
-        [JsonProperty("pessoa")]
-        public virtual PessoaDTO Pessoa { get; set; }
-
-        [JsonProperty("formaPagamento")]
-        public virtual FormaPagamentoDTO FormaPagamento { get; set; }
-
-        [JsonProperty("contaBancaria")]
-        public virtual ContaBancariaDTO ContaBancaria { get; set; }
+        [JsonProperty("formaPagamentoNome")]
+        public string FormaPagamentoNome { get; set; }
     }
 }

@@ -5,12 +5,12 @@ namespace Evian.Entities.Enums
     public enum StatusContaBancaria
     {
         [Subtitle("EmAberto", "Em aberto", "ABER", "totvs-blue")]
-        EmAberto = 1,
+        EmAberto = 0,
 
         [Subtitle("Pago", "Pago", "PAGO", "green")]
-        Pago = 2,
+        Pago = 1,
 
         [Subtitle("BaixadoParcialmente", "Baixado Parcialmente", "BPAR", "gray")]
-        BaixadoParcialmente = 3
+        BaixadoParcialmente = 2
     }
 }
