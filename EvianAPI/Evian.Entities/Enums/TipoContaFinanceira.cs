@@ -5,9 +5,9 @@ namespace Evian.Entities.Enums
     public enum TipoContaFinanceira
     {
         [Subtitle("ContaPagar", "Conta Pagar")]
-        ContaPagar = 1,
+        ContaPagar = 0,
 
         [Subtitle("ContaReceber", "Conta Receber")]
-        ContaReceber = 2,
+        ContaReceber = 1,
     }
 }

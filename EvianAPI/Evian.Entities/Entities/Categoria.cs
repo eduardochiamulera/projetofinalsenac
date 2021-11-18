@@ -12,6 +12,7 @@ namespace Evian.Entities.Entities
 
         public Guid? CategoriaPaiId { get; set; }
 
+        [JsonIgnore]
         public TipoCarteira TipoCarteira { get; set; }
 
         [NotMapped]

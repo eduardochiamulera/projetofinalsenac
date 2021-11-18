@@ -38,7 +38,7 @@ namespace EvianAPI.Controllers.Platform
         }
 
         [HttpGet("contapagar")]
-        public IActionResult GetFornecedores()
+        public IActionResult GetContasPagar()
         {
             var entities = All().Where(x => x.TipoContaFinanceira == TipoContaFinanceira.ContaPagar).AsQueryable();
             var result = _mapper.Map<List<ContaFinanceiraDTO>>(entities);
@@ -46,7 +46,7 @@ namespace EvianAPI.Controllers.Platform
         }
 
         [HttpGet("contareceber")]
-        public IActionResult GetClientes()
+        public IActionResult GetContasReceber()
         {
             var entities = All().Where(x => x.TipoContaFinanceira == TipoContaFinanceira.ContaReceber).AsQueryable();
             var result = _mapper.Map<List<ContaFinanceiraDTO>>(entities);
@@ -56,14 +56,21 @@ namespace EvianAPI.Controllers.Platform
         [HttpGet("{key}")]
         public IActionResult Get(Guid key)
         {
-            if (!All().Any(x => x.Id == key))
+
+            var entity = UnitOfWork.ContaFinanceiraBL
+                .AllIncluding(x => x.Pessoa, x => x.FormaPagamento, x => x.CondicaoParcelamento, x => x.Categoria)
+                .FirstOrDefault(x => x.Id == key);
+
+            if (entity is null)
             {
                 throw new Exception("Registro não encontrado ou já excluído");
             }
             else
             {
-                return Ok(SingleResult.Create(All().Where(x => x.Id == key)));
+                var result = _mapper.Map<ContaFinanceiraDTO>(entity);
+                return Ok(result);
             }
+
         }
 
         [HttpPost]
@@ -99,7 +106,7 @@ namespace EvianAPI.Controllers.Platform
             if (entity == null || !entity.Ativo)
                 throw new Exception("Registro não encontrado ou já excluído");
 
-            entity = _mapper.Map<ContaFinanceiraDTO, ContaFinanceira>(model, entity);
+            entity = _mapper.Map(model, entity);
             
             ModelState.Clear();
             Update(entity);
@@ -107,20 +114,9 @@ namespace EvianAPI.Controllers.Platform
             if (!ModelState.IsValid)
                 AddErrorModelState(ModelState);
 
-            //try
-            //{
-            //    await UnitSave();
+            model = _mapper.Map(entity, model);
 
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!Exists(key))
-            //        return NotFound();
-            //    else
-            //        throw;
-            //}
-
-            return Ok();
+            return Ok(model);
         }
 
         [HttpDelete("{key}")]

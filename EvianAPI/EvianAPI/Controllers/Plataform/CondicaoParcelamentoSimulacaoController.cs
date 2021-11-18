@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Evian.Entities.Entities;
 using Evian.Entities.Entities.DTO;
-using Evian.Entities.Enums;
 using EvianAPI.Controllers.Base;
 using EvianBL;
 using Microsoft.AspNetCore.JsonPatch;
@@ -25,19 +24,14 @@ namespace EvianAPI.Controllers.Platform
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CategoriaController : ApiEmpresaBaseController<Categoria, CategoriaBL>
+    public class CondicaoParcelamentoSimulacaoController : ApiEmpresaBaseController<CondicaoParcelamento, CondicaoParcelamentoBL>
     {
-        public CategoriaController(IMapper mapper) : base(mapper) { }
+        public CondicaoParcelamentoSimulacaoController(IMapper mapper) : base(mapper) { }
 
-
-        [HttpGet("{tipoCarteira}")]
-        public IActionResult GetByTipoCarteira(string tipoCarteira)
+        [HttpGet]
+        public IActionResult Get([FromQuery]Guid condicaoParcelamentoId, DateTime dataReferencia, decimal valor)
         {
-            var tipoCarteiraEnum = (TipoCarteira)Enum.Parse(typeof(TipoCarteira), tipoCarteira);
-
-            var entities = All().Where(x => x.TipoCarteira == tipoCarteiraEnum).AsQueryable();
-            var result = _mapper.Map<List<CategoriaDTO>>(entities);
-            return Ok(result);
+            return Ok(UnitOfWork.CondicaoParcelamentoBL.GetPrestacoes(condicaoParcelamentoId, dataReferencia, valor));
         }
     }
 }
