@@ -27,7 +27,10 @@ namespace EvianBL
 
             //na nova Transação e quando status nao definido
             if (entity.StatusContaBancaria == default(StatusContaBancaria))
+            {
                 entity.StatusContaBancaria = StatusContaBancaria.EmAberto;
+                entity.Saldo = entity.ValorPrevisto;
+            }
 
             var condicoesParcelamento = _unitOfWork.CondicaoParcelamentoBL.GetPrestacoes(entity.CondicaoParcelamentoId, entity.DataVencimento, entity.ValorPrevisto);
             var contaFinanceiraPrincipal = entity.Id == default(Guid) ? Guid.NewGuid() : entity.Id;

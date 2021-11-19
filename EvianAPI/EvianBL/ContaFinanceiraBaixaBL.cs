@@ -14,33 +14,37 @@ namespace EvianBL
 
         public override void Insert(ContaFinanceiraBaixa entity)
         {
-            //var contaFinanceira = entity.ContaFinanceiraId != default(Guid) ? contaFinanceiraBL.All.FirstOrDefault(x => x.Id == entity.ContaFinanceiraId) : entity.ContaFinanceira;
-            //var valorPagoConta = contaFinanceira.ValorPago.GetValueOrDefault(0);
+            var contaFinanceira = entity.ContaFinanceiraId != default(Guid) ? 
+                _unitOfWork.ContaFinanceiraBL.All.FirstOrDefault(x => x.Id == entity.ContaFinanceiraId) : throw new Exception("Conta inválida.");
 
-            //entity.ContaFinanceira = null;
-            //contaFinanceira.ValorPrevisto = Math.Round(contaFinanceira.ValorPrevisto, 2);
+            contaFinanceira.ValorPago += entity.Valor;
 
-            //if (contaFinanceira == null) throw new Exception("Conta inválida.");
+            if (contaFinanceira.ValorPago > contaFinanceira.ValorPrevisto) throw new Exception("Valor pago deve ser menor ou igual ao saldo");
 
-            //entity.ContaFinanceiraId = contaFinanceira.Id;
+            contaFinanceira.Saldo -= entity.Valor;
 
-            //entity.Fail(!contaBancariaBL.All.Any(x => x.Id == entity.ContaBancariaId), ContaInvalida);
-            //entity.Fail(Math.Round(entity.Valor, 2) > Math.Round(contaFinanceira.ValorPrevisto, 2), ValorPagoInvalido);
-            //entity.Fail(Math.Round((valorPagoConta + entity.Valor), 2) > Math.Round(contaFinanceira.ValorPrevisto, 2), SomaValoresInvalida);
+            entity.ContaFinanceira = null;
+            contaFinanceira.ValorPrevisto = Math.Round(contaFinanceira.ValorPrevisto, 2);
 
-            //base.Insert(entity);
+            if (contaFinanceira == null) throw new Exception("Conta inválida.");
 
-            //valorPagoConta += entity.Valor;
+            entity.ContaFinanceiraId = contaFinanceira.Id;
 
-            //contaFinanceira.ValorPago = valorPagoConta;
-            //if (Math.Round(contaFinanceira.ValorPago.GetValueOrDefault(0), 2) < Math.Round(contaFinanceira.ValorPrevisto, 2))
-            //    contaFinanceira.StatusContaBancaria = StatusContaBancaria.BaixadoParcialmente;
-            //else
-            //    contaFinanceira.StatusContaBancaria = StatusContaBancaria.Pago;
+            entity.Fail(!_unitOfWork.ContaBancariaBL.All.Any(x => x.Id == entity.ContaBancariaId), ContaInvalida);
+            entity.Fail(Math.Round(entity.Valor, 2) > Math.Round(contaFinanceira.ValorPrevisto, 2), ValorPagoInvalido);
 
-            //saldoHistoricoBL.AtualizaSaldoHistorico(entity.Data, entity.Valor, entity.ContaBancariaId, contaFinanceira.TipoContaFinanceira);
+            base.Insert(entity);
 
-            //movimentacaoBL.CriaMovimentacao(entity.Data, entity.Valor, entity.ContaBancariaId, contaFinanceira.TipoContaFinanceira, entity.ContaFinanceiraId);
+            if (Math.Round(contaFinanceira.ValorPago.GetValueOrDefault(0), 2) < Math.Round(contaFinanceira.ValorPrevisto, 2))
+                contaFinanceira.StatusContaBancaria = StatusContaBancaria.BaixadoParcialmente;
+            else
+                contaFinanceira.StatusContaBancaria = StatusContaBancaria.Pago;
+
+            _unitOfWork.ContaFinanceiraBL.Update(contaFinanceira);
+
+            _unitOfWork.SaldoHistoricoBL.AtualizaSaldoHistorico(entity.Data, entity.Valor, entity.ContaBancariaId, contaFinanceira.TipoContaFinanceira);
+
+            _unitOfWork.MovimentacaoBL.CriaMovimentacao(entity.Data, entity.Valor, entity.ContaBancariaId, contaFinanceira.TipoContaFinanceira, entity.ContaFinanceiraId.Value);
         }
 
         public override void Update(ContaFinanceiraBaixa entity)
