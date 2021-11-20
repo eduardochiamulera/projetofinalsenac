@@ -17,21 +17,15 @@ namespace EvianBL
             var contaFinanceira = entity.ContaFinanceiraId != default(Guid) ? 
                 _unitOfWork.ContaFinanceiraBL.All.FirstOrDefault(x => x.Id == entity.ContaFinanceiraId) : throw new Exception("Conta inválida.");
 
-            contaFinanceira.ValorPago += entity.Valor;
-
-            if (contaFinanceira.ValorPago > contaFinanceira.ValorPrevisto) throw new Exception("Valor pago deve ser menor ou igual ao saldo");
+            contaFinanceira.ValorPago = contaFinanceira.ValorPago.HasValue ? contaFinanceira.ValorPago + entity.Valor : entity.Valor;
 
             contaFinanceira.Saldo -= entity.Valor;
-
-            entity.ContaFinanceira = null;
-            contaFinanceira.ValorPrevisto = Math.Round(contaFinanceira.ValorPrevisto, 2);
+            entity.Data = DateTime.Now;
 
             if (contaFinanceira == null) throw new Exception("Conta inválida.");
 
-            entity.ContaFinanceiraId = contaFinanceira.Id;
-
             entity.Fail(!_unitOfWork.ContaBancariaBL.All.Any(x => x.Id == entity.ContaBancariaId), ContaInvalida);
-            entity.Fail(Math.Round(entity.Valor, 2) > Math.Round(contaFinanceira.ValorPrevisto, 2), ValorPagoInvalido);
+            entity.Fail((Math.Round(entity.Valor, 2) > Math.Round(contaFinanceira.ValorPrevisto, 2)) || entity.Valor <= 0, ValorPagoInvalido);
 
             base.Insert(entity);
 

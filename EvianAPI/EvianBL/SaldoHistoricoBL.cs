@@ -67,7 +67,7 @@ namespace EvianBL
             if (tipoContaFinanceira == TipoContaFinanceira.ContaPagar)
                 valorContabil = valorBase * -1;
 
-            var saldoHistorico = All.FirstOrDefault(x => x.ContaBancariaId == contaBancariaId && x.Data == data.Date);
+            var saldoHistorico = All.FirstOrDefault(x => x.ContaBancariaId == contaBancariaId);
             if (saldoHistorico == null)
             {
                 var ultimoSaldo = All.OrderByDescending(x => x.Data).FirstOrDefault(x => x.ContaBancariaId == contaBancariaId && x.Data < data);

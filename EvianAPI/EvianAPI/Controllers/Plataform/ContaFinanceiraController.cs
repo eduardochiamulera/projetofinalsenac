@@ -40,7 +40,8 @@ namespace EvianAPI.Controllers.Platform
         [HttpGet("contapagar")]
         public IActionResult GetContasPagar()
         {
-            var entities = All().Where(x => x.TipoContaFinanceira == TipoContaFinanceira.ContaPagar).AsQueryable();
+            var entities = UnitOfWork.ContaFinanceiraBL
+                .AllIncluding(x => x.Pessoa).Where(x => x.TipoContaFinanceira == TipoContaFinanceira.ContaPagar).AsQueryable();
             var result = _mapper.Map<List<ContaFinanceiraDTO>>(entities);
             return Ok(result);
         }
@@ -48,7 +49,8 @@ namespace EvianAPI.Controllers.Platform
         [HttpGet("contareceber")]
         public IActionResult GetContasReceber()
         {
-            var entities = All().Where(x => x.TipoContaFinanceira == TipoContaFinanceira.ContaReceber).AsQueryable();
+            var entities = UnitOfWork.ContaFinanceiraBL
+                .AllIncluding(x => x.Pessoa).Where(x => x.TipoContaFinanceira == TipoContaFinanceira.ContaReceber).AsQueryable();
             var result = _mapper.Map<List<ContaFinanceiraDTO>>(entities);
             return Ok(result);
         }

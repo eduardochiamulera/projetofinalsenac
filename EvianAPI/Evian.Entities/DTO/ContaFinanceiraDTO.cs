@@ -28,11 +28,25 @@ namespace Evian.Entities.Entities.DTO
         [JsonProperty("pessoaId")]
         public Guid PessoaId { get; set; }
 
-        [JsonProperty("dataEmissao")]
+        [JsonIgnore]
         public DateTime DataEmissao { get; set; }
 
-        [JsonProperty("dataVencimento")]
+        [JsonIgnore]
         public DateTime DataVencimento { get; set; }
+
+        [JsonProperty("dataEmissao")]
+        public string DataEmissaoString 
+        {
+            get => this.DataEmissao.ToString("yyyy-MM-dd");
+            set => DataEmissao = DateTime.Parse(DataEmissaoString);
+        }
+
+        [JsonProperty("dataVencimento")]
+        public string DataVencimentoString 
+        { 
+            get => this.DataVencimento.ToString("dd-MM-yyyy");
+            set => DataVencimento = DateTime.Parse(DataVencimentoString);
+        }
 
         [JsonProperty("descricao")]
         public string Descricao { get; set; }
