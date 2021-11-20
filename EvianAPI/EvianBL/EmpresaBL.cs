@@ -57,6 +57,11 @@ namespace EvianBL
 
         public override IQueryable<TEntity> All => base.All.Where(_predicateEmpresa);
 
+        public override IQueryable<TEntity> AllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return base.AllIncluding(includeProperties).Where(_predicateEmpresa);
+        }
+
         public override IQueryable<TEntity> AllWithInactive => base.AllWithInactive.Where(x => x.EmpresaId == EmpresaId);
 
         public virtual IQueryable<TEntity> AllWithoutPlatform => base._repository.All;

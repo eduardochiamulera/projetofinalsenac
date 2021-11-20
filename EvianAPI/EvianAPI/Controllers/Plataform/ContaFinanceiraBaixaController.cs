@@ -106,19 +106,15 @@ namespace EvianAPI.Controllers.Platform
             return Ok();
         }
 
-        [HttpDelete("{key}")]
-        public virtual async Task<IActionResult> Delete(Guid key)
+        [HttpDelete("{contaFinanceiraId}")]
+        public virtual async Task<IActionResult> Delete(Guid contaFinanceiraId)
         {
-            if (key == default(Guid) || key == null)
+            if (contaFinanceiraId == default(Guid) || contaFinanceiraId == null)
                 return BadRequest();
 
-            var entity = Find(key);
+            var entity = UnitOfWork.ContaFinanceiraBaixaBL.All.Where(x => x.ContaFinanceiraId == contaFinanceiraId).ToList();
 
-            if (entity == null || !entity.Ativo)
-                throw new Exception("Registro não encontrado ou já excluído");
-
-            ModelState.Clear();
-            Delete(entity);
+            UnitOfWork.ContaFinanceiraBaixaBL.DeletarTodasBaixas(entity);
 
             if (!ModelState.IsValid)
                 AddErrorModelState(ModelState);
