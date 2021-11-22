@@ -1,6 +1,7 @@
 ﻿using Evian.Helpers;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Evian.Entities.Entities.DTO
 {
@@ -44,7 +45,7 @@ namespace Evian.Entities.Entities.DTO
         [JsonProperty("dataVencimento")]
         public string DataVencimentoString 
         { 
-            get => this.DataVencimento.ToString("dd-MM-yyyy");
+            get => this.DataVencimento.ToString("yyyy-MM-dd");
             set => DataVencimento = DateTime.Parse(DataVencimentoString);
         }
 
@@ -104,5 +105,8 @@ namespace Evian.Entities.Entities.DTO
 
         [JsonProperty("formaPagamentoNome")]
         public string FormaPagamentoNome { get; set; }
+
+        [JsonProperty("baixas")]
+        public List<ContaFinanceiraBaixaDTO> Baixas { get; set; }
     }
 }

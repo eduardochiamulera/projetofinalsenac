@@ -63,6 +63,8 @@ namespace EvianAPI.Controllers.Platform
                 .AllIncluding(x => x.Pessoa, x => x.FormaPagamento, x => x.CondicaoParcelamento, x => x.Categoria)
                 .FirstOrDefault(x => x.Id == key);
 
+            entity.Baixas = UnitOfWork.ContaFinanceiraBaixaBL.All.Where(x => x.ContaFinanceiraId == key).ToList();
+
             if (entity is null)
             {
                 throw new Exception("Registro não encontrado ou já excluído");

@@ -22,8 +22,19 @@ namespace EvianBL
             base.ValidaModel(entity);
         }
 
+        private void NormalizeEntity(Pessoa entity)
+        {
+            const string regexSomenteDigitos = @"[^\d]";
+
+            entity.CPFCNPJ = Regex.Replace(entity.CPFCNPJ ?? "", regexSomenteDigitos, "");
+            entity.Celular = Regex.Replace(entity.Celular ?? "", regexSomenteDigitos, "");
+            entity.Telefone = Regex.Replace(entity.Telefone ?? "", regexSomenteDigitos, "");
+            entity.CEP = Regex.Replace(entity.CEP ?? "", regexSomenteDigitos, "");
+        }
+
         public void ValidaModelNoBase(Pessoa entity)
         {
+            NormalizeEntity(entity);
             ValidaDefaultCPFCNPJTipoDocumento(entity);
             entity.Fail(string.IsNullOrWhiteSpace(entity.Nome), NomeInvalido);
             entity.Fail(!entity.Cliente && !entity.Fornecedor, TipoCadastroInvalido);

@@ -31,7 +31,7 @@ namespace EvianAPI.Controllers.Platform
         [HttpGet]
         public IActionResult Get()
         {
-            var entities = All().AsQueryable();
+            var entities = UnitOfWork.ContaBancariaBL.AllIncluding(x => x.Banco).AsQueryable();
             var result = _mapper.Map<List<ContaBancariaDTO>>(entities);
             return Ok(result);
         }

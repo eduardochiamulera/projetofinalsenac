@@ -62,6 +62,8 @@ namespace EvianBL
 
             //Atualiza Conta Financeira
             contaFinanceira.ValorPago = valorPagoConta;
+            contaFinanceira.Saldo = contaFinanceira.ValorPrevisto;
+
             if (contaFinanceira.ValorPago > default(decimal))
                 contaFinanceira.StatusContaBancaria = StatusContaBancaria.BaixadoParcialmente;
             else

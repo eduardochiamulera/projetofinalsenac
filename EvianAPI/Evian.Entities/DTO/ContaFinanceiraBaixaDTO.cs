@@ -17,11 +17,5 @@ namespace Evian.Entities.Entities.DTO
 
         [JsonProperty("observacaoBaixa")]
         public string Observacao { get; set; }
-
-        [JsonProperty("contaFinanceira")]
-        public virtual ContaFinanceiraDTO ContaFinanceira { get; set; }
-
-        [JsonProperty("contaBancaria")]
-        public virtual ContaBancariaDTO ContaBancaria { get; set; }
     }
 }
