@@ -29,25 +29,11 @@ namespace Evian.Entities.Entities.DTO
         [JsonProperty("pessoaId")]
         public Guid PessoaId { get; set; }
 
-        [JsonIgnore]
+        [JsonProperty("dataEmissao")]
         public DateTime DataEmissao { get; set; }
 
-        [JsonIgnore]
-        public DateTime DataVencimento { get; set; }
-
-        [JsonProperty("dataEmissao")]
-        public string DataEmissaoString 
-        {
-            get => this.DataEmissao.ToString("yyyy-MM-dd");
-            set => DataEmissao = DateTime.Parse(DataEmissaoString);
-        }
-
         [JsonProperty("dataVencimento")]
-        public string DataVencimentoString 
-        { 
-            get => this.DataVencimento.ToString("yyyy-MM-dd");
-            set => DataVencimento = DateTime.Parse(DataVencimentoString);
-        }
+        public DateTime DataVencimento { get; set; }
 
         [JsonProperty("descricao")]
         public string Descricao { get; set; }
@@ -61,6 +47,10 @@ namespace Evian.Entities.Entities.DTO
         [JsonProperty("statusContaBancaria")]
         [APIEnum("StatusContaBancaria")]
         public string StatusContaBancaria { get; set; }
+
+        [JsonProperty("tipoContaFinanceira")]
+        [APIEnum("TipoContaFinanceira")]
+        public string TipoContaFinanceira { get; set; }
 
         [JsonProperty("repetir")]
         public bool Repetir { get; set; }

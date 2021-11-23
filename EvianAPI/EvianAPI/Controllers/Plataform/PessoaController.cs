@@ -37,10 +37,20 @@ namespace EvianAPI.Controllers.Platform
             return Ok(result);
         }
 
+        private IQueryable<Pessoa> GetPessoas(string tipoPessoa)
+        {
+            if(tipoPessoa == "cliente")
+            {
+                return All().Where(x => x.Cliente).AsQueryable();
+            }
+
+            return All().Where(x => x.Fornecedor).AsQueryable();
+        }
+
         [HttpGet("fornecedores")]
         public IActionResult GetFornecedores()
         {
-            var entities = All().Where(x => x.Fornecedor).AsQueryable();
+            var entities = GetPessoas("fornecedor");
             var result = _mapper.Map<List<PessoaDTO>>(entities);
             return Ok(result);
         }
@@ -48,7 +58,7 @@ namespace EvianAPI.Controllers.Platform
         [HttpGet("clientes")]
         public IActionResult GetClientes()
         {
-            var entities = All().Where(x => x.Cliente).AsQueryable();
+            var entities = GetPessoas("cliente");
             var result = _mapper.Map<List<PessoaDTO>>(entities);
             return Ok(result);
         }

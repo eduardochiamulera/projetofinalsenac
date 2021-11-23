@@ -36,13 +36,11 @@ namespace EvianBL
             var contaFinanceiraPrincipal = entity.Id == default(Guid) ? Guid.NewGuid() : entity.Id;
 
             GravaParcelamentoRepeticoes(entity, repetir, condicoesParcelamento, contaFinanceiraPrincipal);
-
-            base.Insert(entity);
         }
 
         private void GravaParcelamentoRepeticoes(ContaFinanceira entity, bool repetir, List<CondicaoParcelamentoParcelaDTO> condicoesParcelamento, Guid contaFinanceiraPrincipal)
         {
-            var numero = default(int);
+            var numero = 1;
             if (All.Any())
             {
                 numero = All.Max(x => x.Numero);
