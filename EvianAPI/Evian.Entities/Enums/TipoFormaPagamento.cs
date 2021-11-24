@@ -53,6 +53,9 @@ namespace Evian.Entities.Enums
         [Subtitle("Boleto", "Boleto")]
         Boleto = 15,
 
+        [Subtitle("PIX", "Pix")]
+        PIX = 16,
+
         [XmlEnum(Name = "90")]
         [Subtitle("SemPagamento", "Sem Pagamento")]
         SemPagamento = 90,

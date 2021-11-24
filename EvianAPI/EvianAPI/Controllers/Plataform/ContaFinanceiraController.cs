@@ -52,7 +52,7 @@ namespace EvianAPI.Controllers.Platform
         private IQueryable<ContaFinanceira> GetContasFinanceiras(TipoContaFinanceira tipo)
         {
             return UnitOfWork.ContaFinanceiraBL
-                .AllIncluding(x => x.Pessoa, x => x.FormaPagamento, x => x.CondicaoParcelamento, x => x.Categoria).Where(x => x.TipoContaFinanceira == tipo).AsQueryable();
+                .AllWithInactiveIncluding(x => x.Pessoa, x => x.FormaPagamento, x => x.CondicaoParcelamento, x => x.Categoria).Where(x => x.TipoContaFinanceira == tipo).OrderBy(x => x.Numero).AsQueryable();
         }
 
         [HttpGet("contapagar")]

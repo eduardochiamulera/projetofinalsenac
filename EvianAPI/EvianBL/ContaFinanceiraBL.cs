@@ -19,6 +19,7 @@ namespace EvianBL
         {
             entity.EmpresaId = EmpresaId;
             entity.UsuarioInclusao = AppUser;
+            entity.Id = Guid.NewGuid();
 
             var repetir = RepeticaoValida(entity);
 
@@ -33,7 +34,7 @@ namespace EvianBL
             }
 
             var condicoesParcelamento = _unitOfWork.CondicaoParcelamentoBL.GetPrestacoes(entity.CondicaoParcelamentoId, entity.DataVencimento, entity.ValorPrevisto);
-            var contaFinanceiraPrincipal = entity.Id == default(Guid) ? Guid.NewGuid() : entity.Id;
+            var contaFinanceiraPrincipal = entity.Id;
 
             GravaParcelamentoRepeticoes(entity, repetir, condicoesParcelamento, contaFinanceiraPrincipal);
         }
