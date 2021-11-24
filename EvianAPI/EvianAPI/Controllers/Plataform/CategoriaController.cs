@@ -29,6 +29,13 @@ namespace EvianAPI.Controllers.Platform
     {
         public CategoriaController(IMapper mapper) : base(mapper) { }
 
+        [HttpGet("")]
+        public IActionResult Get()
+        {
+            var entities = All().AsQueryable();
+            var result = _mapper.Map<List<CategoriaDTO>>(entities);
+            return Ok(result);
+        }
 
         [HttpGet("{tipoCarteira}")]
         public IActionResult GetByTipoCarteira(string tipoCarteira)

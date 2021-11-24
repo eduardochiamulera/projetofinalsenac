@@ -37,10 +37,22 @@ namespace EvianAPI.Controllers.Platform
             return Ok(result);
         }
 
+        [HttpGet("{mes}/{ano}")]
+        public IActionResult GetContasByPeriodo(int mes, int ano)
+        {
+            var dataInicio = new DateTime(ano, mes, 1);
+            var ultimodia = DateTime.DaysInMonth(ano, mes);
+            var dataFinal = new DateTime(ano, mes, ultimodia).AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            var entities = UnitOfWork.ContaFinanceiraBL.AllIncluding(x => x.Categoria).Where(x => x.DataEmissao >= dataInicio && x.DataEmissao <= dataFinal).AsQueryable();
+            var result = _mapper.Map<List<ContaFinanceiraDTO>>(entities);
+            return Ok(result);
+        }
+
         private IQueryable<ContaFinanceira> GetContasFinanceiras(TipoContaFinanceira tipo)
         {
             return UnitOfWork.ContaFinanceiraBL
-                .AllIncluding(x => x.Pessoa).Where(x => x.TipoContaFinanceira == tipo).AsQueryable();
+                .AllIncluding(x => x.Pessoa, x => x.FormaPagamento, x => x.CondicaoParcelamento, x => x.Categoria).Where(x => x.TipoContaFinanceira == tipo).AsQueryable();
         }
 
         [HttpGet("contapagar")]
