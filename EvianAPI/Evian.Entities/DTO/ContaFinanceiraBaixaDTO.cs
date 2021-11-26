@@ -6,6 +6,10 @@ namespace Evian.Entities.Entities.DTO
     [Serializable]
     public class ContaFinanceiraBaixaDTO : BaseDTO
     {
+
+        [JsonProperty("data")]
+        public DateTime Data { get; set; }
+
         [JsonProperty("contaFinanceiraId")]
         public Guid ContaFinanceiraId { get; set; }
 
